@@ -15,15 +15,14 @@ public class RecommendationController {
 
     private final MovieService service;
 
-    @Autowired
-    public RecommendationController(MovieService service) {
+    public RecommendationController(@Autowired MovieService service) {
         this.service = service;
     }
 
     /**
      * Get movie recommendations.
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/recommendations")
     public List<Movie> recommend(
             @RequestParam(value="genre", required = false) String genre,
             @RequestParam(value="year", required = false) Integer year) {
