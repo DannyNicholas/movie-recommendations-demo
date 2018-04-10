@@ -1,5 +1,6 @@
 package com.danosoftware.servicemocks.controller;
 
+import com.danosoftware.servicemocks.dto.Health;
 import com.danosoftware.servicemocks.dto.Movie;
 import com.danosoftware.servicemocks.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,11 @@ public class RecommendationController {
             @RequestBody Movie movie) {
 
         return service.addMovie(movie);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/health")
+    public Health health() {
+
+        return new Health("I am alive");
     }
 }
