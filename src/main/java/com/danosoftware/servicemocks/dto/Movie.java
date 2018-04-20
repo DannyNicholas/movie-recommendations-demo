@@ -2,9 +2,15 @@ package com.danosoftware.servicemocks.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
+@ToString
+@EqualsAndHashCode
+@Getter
 public class Movie {
 
     @JsonProperty("name")

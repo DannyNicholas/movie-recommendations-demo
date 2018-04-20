@@ -15,16 +15,15 @@ public class RecommendationController {
 
     private final MovieService service;
 
-    @Autowired
-    public RecommendationController(MovieService service) {
+    public RecommendationController(@Autowired MovieService service) {
         this.service = service;
     }
 
     /**
      * Get movie recommendations.
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Movie> recommend(
+    @RequestMapping(method = RequestMethod.GET, value = "/recommendations")
+    public @ResponseBody List<Movie> recommend(
             @RequestParam(value="genre", required = false) String genre,
             @RequestParam(value="year", required = false) Integer year) {
 
@@ -37,7 +36,7 @@ public class RecommendationController {
      * Get a movie using provided id.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
-    public Movie getMovie(
+    public @ResponseBody Movie getMovie(
             @PathVariable Long movieId) {
 
         return service.getMovie(movieId);
@@ -48,7 +47,7 @@ public class RecommendationController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus( HttpStatus.CREATED )
-    public Long add(
+    public @ResponseBody Long add(
             @RequestBody Movie movie) {
 
         return service.addMovie(movie);
