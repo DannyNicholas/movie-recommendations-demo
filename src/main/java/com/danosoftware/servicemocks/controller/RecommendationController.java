@@ -23,7 +23,7 @@ public class RecommendationController {
      * Get movie recommendations.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/recommendations")
-    public List<Movie> recommend(
+    public @ResponseBody List<Movie> recommend(
             @RequestParam(value="genre", required = false) String genre,
             @RequestParam(value="year", required = false) Integer year) {
 
@@ -36,7 +36,7 @@ public class RecommendationController {
      * Get a movie using provided id.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
-    public Movie getMovie(
+    public @ResponseBody Movie getMovie(
             @PathVariable Long movieId) {
 
         return service.getMovie(movieId);
@@ -47,7 +47,7 @@ public class RecommendationController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus( HttpStatus.CREATED )
-    public Long add(
+    public @ResponseBody Long add(
             @RequestBody Movie movie) {
 
         return service.addMovie(movie);
