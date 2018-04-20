@@ -1,66 +1,51 @@
 package com.danosoftware.servicemocks.controller;
 
-import org.junit.Before;
+import com.danosoftware.servicemocks.dto.Movie;
+import com.danosoftware.servicemocks.service.MovieService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.WebApplicationContext;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.List;
+import java.util.Optional;
 
+import static com.danosoftware.servicemocks.helpers.MovieHelper.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+
+/**
+ * Tests to confirm responses from the @Autowired recommendation controller.
+ *
+ * Since we are only testing the controller, we want to mock the service layer.
+ *
+ * @MockBean replaces the normal MovieService instance created by Spring with a mock.
+ * This gets injected into the controller instead.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@WebAppConfiguration
-//@ContextConfiguration(classes = {RecommendationConfig.class, RecommendationController.class})
-//@ActiveProfiles("local")
 public class RecommendationControllerIT {
 
+    @MockBean
+    private MovieService movieService;
+
     @Autowired
-    private WebApplicationContext context;
-
-    private MockMvc mockMvc;
-    private MockRestServiceServer mockRestServiceServer;
-
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        mockRestServiceServer = MockRestServiceServer.createServer(new RestTemplate());
-    }
-
-
-//    @Test
-//    public void shouldReturnDefaultMessage() throws Exception {
-//        this.mockMvc.perform(get("/api/movies/recommendations")).andDo(print()).andExpect(status().isOk())
-//                .andExpect(content().string(containsString("Hello World")));
-//    }
+    private RecommendationController controller;
 
     @Test
-    public void shouldReturnMovie() throws Exception {
+    public void shouldReturnRecommendedMoviesFromController() {
 
-        mockRestServiceServer.expect(requestTo("http://localhost:9090/api/movies-service/recommend"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess("resultSuccess", MediaType.TEXT_PLAIN));
+        given(movieService.recommend(any(Optional.class), any(Optional.class))).willReturn(allMovies());
 
-        mockMvc.perform(get("/api/movies/recommendations"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Star Wars")));
+        List<Movie> myMovies = controller.recommend(null, 0);
 
-        mockRestServiceServer.verify();
+        assertThat(myMovies.size(), equalTo(3));
+        assertThat(myMovies.get(0), equalTo(movieStarWars()));
+        assertThat(myMovies.get(1), equalTo(movieGodfather()));
+        assertThat(myMovies.get(2), equalTo(movieSolaris()));
     }
 }
