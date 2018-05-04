@@ -71,6 +71,7 @@ public class RestMovieRepositoryIT {
         assertThat(movies.size(), equalTo(3));
         assertThat(movies.get(0), equalTo(movieStarWars()));
         assertThat(movies.get(1), equalTo(movieGodfather()));
-        assertThat(movies.get(2), equalTo(movieSolaris()));
+
+        server.verify();
     }
 }
