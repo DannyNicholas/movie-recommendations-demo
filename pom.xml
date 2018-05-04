@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.danosoftware</groupId>
-	<artifactId>service-mocks</artifactId>
+	<artifactId>movie-recommendations</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>service-mocks</name>
-	<description>Mocking services using Spring Boot</description>
+	<name>movie-recommendations</name>
+	<description>Movie Recommendations Demo using Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

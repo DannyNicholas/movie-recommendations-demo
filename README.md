@@ -1,5 +1,5 @@
-# service-mocks
-Spring Boot service to demonstrate mocking
+# Movie Recommendations Demo
+Spring Boot service demonstration
 
 ## Deploying locally
 
@@ -9,7 +9,7 @@ mvn clean install
 
 ### Run application
 
-Run main class `ServiceMocksApplication.java`.
+Run main class `MovieRecommendationApplication.java`.
 
 To run using stub responses add `--spring.profiles.active=local`
 
@@ -27,7 +27,7 @@ Build JAR and confirm application works locally
 
 ```
 ./mvnw package
-java -jar target/service-mocks-<version>-SNAPSHOT.jar
+java -jar target/movie-recommendations-<version>-SNAPSHOT.jar
 ```
 
 To build a Docker image, make sure you are running on a machine where Docker is installed.
@@ -40,13 +40,13 @@ Check image:
 ```
 docker image ls
 ```
-Should be listed as `springio/service-mocks`.
+Should be listed as `springio/movie-recommendations`.
 
 ### Run in a Docker container
 
 Run in container:
 ```
-docker run -p 4000:8080 springio/service-mocks
+docker run -p 4000:8080 springio/movie-recommendations
 ```
 
 Internally the service runs on port `8080`. The above command maps port `4000` of the docker machine to the spring boot service.
