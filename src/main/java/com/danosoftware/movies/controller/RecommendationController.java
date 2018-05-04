@@ -1,7 +1,7 @@
-package com.danosoftware.servicemocks.controller;
+package com.danosoftware.movies.controller;
 
-import com.danosoftware.servicemocks.dto.Movie;
-import com.danosoftware.servicemocks.service.MovieService;
+import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

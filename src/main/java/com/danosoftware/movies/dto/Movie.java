@@ -1,4 +1,4 @@
-package com.danosoftware.servicemocks.dto;
+package com.danosoftware.movies.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

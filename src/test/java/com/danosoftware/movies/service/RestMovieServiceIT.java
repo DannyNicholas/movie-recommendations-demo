@@ -1,7 +1,7 @@
-package com.danosoftware.servicemocks.service;
+package com.danosoftware.movies.service;
 
-import com.danosoftware.servicemocks.dto.Movie;
-import com.danosoftware.servicemocks.repository.MovieRepository;
+import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.repository.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-import static com.danosoftware.servicemocks.helpers.MovieHelper.*;
+import static com.danosoftware.movies.helpers.MovieHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
