@@ -1,6 +1,6 @@
-package com.danosoftware.servicemocks.service;
+package com.danosoftware.movies.service;
 
-import com.danosoftware.servicemocks.dto.Movie;
+import com.danosoftware.movies.dto.Movie;
 
 import java.util.List;
 import java.util.Optional;

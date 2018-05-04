@@ -11,13 +11,13 @@ mvn clean install
 
 Run main class `MovieRecommendationApplication.java`.
 
-To run using stub responses add `--spring.profiles.active=local`
+To run using stub responses add `--spring.profiles.active=stub`
 
 ### Run application via Maven
 
 Run normally `mvn spring-boot:run`
 
-To run using stub responses add `mvn spring-boot:run -Dspring-boot.run.profiles=local`
+To run using stub responses add `mvn spring-boot:run -Dspring-boot.run.profiles=stub`
 
 ## Docker
 

@@ -1,4 +1,4 @@
-package com.danosoftware.servicemocks.config;
+package com.danosoftware.movies.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

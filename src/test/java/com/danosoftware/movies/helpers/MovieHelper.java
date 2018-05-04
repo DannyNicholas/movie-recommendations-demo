@@ -1,6 +1,6 @@
-package com.danosoftware.servicemocks.helpers;
+package com.danosoftware.movies.helpers;
 
-import com.danosoftware.servicemocks.dto.Movie;
+import com.danosoftware.movies.dto.Movie;
 
 import java.time.LocalDate;
 import java.util.Arrays;

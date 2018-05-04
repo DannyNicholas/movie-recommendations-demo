@@ -1,7 +1,7 @@
-package com.danosoftware.servicemocks.service;
+package com.danosoftware.movies.service;
 
-import com.danosoftware.servicemocks.dto.Movie;
-import com.danosoftware.servicemocks.repository.MovieRepository;
+import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

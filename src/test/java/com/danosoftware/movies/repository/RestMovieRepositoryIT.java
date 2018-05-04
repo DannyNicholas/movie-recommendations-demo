@@ -1,9 +1,7 @@
-package com.danosoftware.servicemocks.repository;
+package com.danosoftware.movies.repository;
 
-import com.danosoftware.servicemocks.config.RecommendationConfig;
-import com.danosoftware.servicemocks.configuration.TestConfig;
-import com.danosoftware.servicemocks.dto.Movie;
-import com.danosoftware.servicemocks.service.FilterMovieService;
+import com.danosoftware.movies.config.RecommendationConfig;
+import com.danosoftware.movies.dto.Movie;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.util.List;
-import java.util.Optional;
 
-import static com.danosoftware.servicemocks.helpers.MovieHelper.*;
+import static com.danosoftware.movies.helpers.MovieHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;

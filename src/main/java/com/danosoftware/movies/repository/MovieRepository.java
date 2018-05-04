@@ -1,6 +1,6 @@
-package com.danosoftware.servicemocks.repository;
+package com.danosoftware.movies.repository;
 
-import com.danosoftware.servicemocks.dto.Movie;
+import com.danosoftware.movies.dto.Movie;
 
 import java.util.List;
 

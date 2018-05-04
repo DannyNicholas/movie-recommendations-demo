@@ -1,11 +1,10 @@
-package com.danosoftware.servicemocks.repository;
+package com.danosoftware.movies.repository;
 
-import com.danosoftware.servicemocks.dto.Movie;
+import com.danosoftware.movies.dto.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
