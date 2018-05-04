@@ -1,49 +1,48 @@
-package com.danosoftware.servicemocks.service;
+package com.danosoftware.servicemocks.repository;
 
 import com.danosoftware.servicemocks.dto.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
- * Movie Service implementation that retrieves movie
+ * Movie Repository implementation that retrieves movie
  * information from an external REST service.
  */
-@Service
-public class RestMovieService implements MovieService {
+@Repository
+@Profile("rest")
+public class RestMovieRepository implements MovieRepository {
 
     private final RestTemplate restTemplate;
     private final String host;
 
-    public RestMovieService(
-            @Autowired RestTemplateBuilder restTemplateBuilder,
-            @Autowired @Qualifier("movieServiceHost") String host) {
+    @Autowired
+    public RestMovieRepository(
+            RestTemplateBuilder restTemplateBuilder,
+            @Qualifier("movieServiceHost") String host) {
         this.restTemplate = restTemplateBuilder.build();
         this.host = host;
     }
 
     /**
-     * Retrieve movies from back-end service and then filter by the optional criteria
+     * Retrieve recommended movies from REST service
      *
-     * @param genre - optional genre filter
-     * @param year - optional year released filter
-     * @return list of filtered movies
+     * @return list of recommended movies
      */
     @Override
-    public List<Movie> recommend(Optional<String> genre, Optional<Integer> year) {
+    public List<Movie> recommend() {
 
         ParameterizedTypeReference<List<Movie>> responseType = new ParameterizedTypeReference<List<Movie>>() {};
 
@@ -56,15 +55,11 @@ public class RestMovieService implements MovieService {
         ResponseEntity<List<Movie>> response = restTemplate
                 .exchange(uri, HttpMethod.GET, null, responseType);
 
-        return response
-                .getBody()
-                .stream()
-                .filter(matches(genre, year))
-                .collect(Collectors.toList());
+        return response.getBody();
     }
 
     /**
-     * Add a new movie
+     * Send a new movie to the REST service
      *
      * @param movie
      * @return id of created movie
@@ -87,7 +82,7 @@ public class RestMovieService implements MovieService {
     }
 
     /**
-     * Retrieve a specific movie using it's ID
+     * Retrieve a specific movie from the REST service using it's ID
      * @param id
      * @return movie
      */
@@ -104,24 +99,5 @@ public class RestMovieService implements MovieService {
                 .exchange(uri, HttpMethod.GET, null, Movie.class);
 
         return response.getBody();
-    }
-
-    /**
-     * Create a predicate that will allow filtering on optional genre and year released.
-     * If no genre or year is provided all movies will pass the filter.
-     */
-    public static Predicate<Movie> matches(Optional<String> genre, Optional<Integer> year) {
-
-        Predicate<Movie> result = movie -> true;
-
-        if (genre.isPresent()) {
-            result = result.and(movie -> genre.get().equals(movie.getGenre()));
-        }
-
-        if (year.isPresent()) {
-            result = result.and(movie -> year.get().equals(movie.getReleaseDate().getYear()));
-        }
-
-        return result;
     }
 }

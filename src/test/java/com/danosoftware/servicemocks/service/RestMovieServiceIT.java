@@ -1,16 +1,14 @@
 package com.danosoftware.servicemocks.service;
 
-import com.danosoftware.servicemocks.configuration.TestConfig;
 import com.danosoftware.servicemocks.dto.Movie;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.danosoftware.servicemocks.repository.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,42 +16,28 @@ import java.util.Optional;
 import static com.danosoftware.servicemocks.helpers.MovieHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import static org.mockito.Mockito.when;
 
 /**
- * Confirms the behaviour of the RestMovieService
+ * Confirms the behaviour of the FilterMovieService
  *
- * Since we only want to test our movie service implementation we need to mock the REST
- * responses returned by the back-end.
+ * Since we only want to test our movie service implementation we need to mock the repository layer.
  *
- * MockRestServiceServer provides a mocked JSON response for any REST requests to the back-end
- * from our movie service.
- *
- * TestConfig class provides the configuration our RestMovieService needs.
+ * @MockBean allows us to mock the repository and return our wanted list of test movies.
  */
 @RunWith(SpringRunner.class)
-@RestClientTest({RestMovieService.class, TestConfig.class})
+@SpringBootTest
 public class RestMovieServiceIT {
 
     @Autowired
     private MovieService movieService;
 
-    @Autowired
-    private MockRestServiceServer server;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    @MockBean
+    private MovieRepository repository;
 
     @Before
     public void setUp() throws Exception {
-
-        String moviesJson =
-                objectMapper.writeValueAsString(allMovies());
-
-        server
-                .expect(requestTo("http://test-host/api/movies-service/recommend"))
-                .andRespond(withSuccess(moviesJson, MediaType.APPLICATION_JSON));
+        when(repository.recommend()).thenReturn(allMovies());
     }
 
     @Test
@@ -99,5 +83,4 @@ public class RestMovieServiceIT {
         assertThat(movies.get(1), equalTo(movieGodfather()));
         assertThat(movies.get(2), equalTo(movieSolaris()));
     }
-
 }
