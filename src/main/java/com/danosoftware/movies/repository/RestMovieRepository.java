@@ -1,15 +1,11 @@
 package com.danosoftware.movies.repository;
 
 import com.danosoftware.movies.dto.Movie;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,19 +16,13 @@ import java.util.List;
  * Movie Repository implementation that retrieves movie
  * information from an external REST service.
  */
-@Repository
-@Profile("rest")
 public class RestMovieRepository implements MovieRepository {
 
     private final RestTemplate restTemplate;
-    private final String host;
+    private final String host = "http://api.movie-service.com";
 
-    @Autowired
-    public RestMovieRepository(
-            RestTemplateBuilder restTemplateBuilder,
-            @Qualifier("movieServiceHost") String host) {
+    public RestMovieRepository(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
-        this.host = host;
     }
 
     /**

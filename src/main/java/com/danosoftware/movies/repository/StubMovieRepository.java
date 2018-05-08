@@ -3,8 +3,6 @@ package com.danosoftware.movies.repository;
 import com.danosoftware.movies.dto.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,8 +12,6 @@ import java.util.List;
  * Provide stub responses to repository requests.
  * Only intended for local testing.
  */
-@Repository
-@Profile("stub")
 public class StubMovieRepository implements MovieRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(StubMovieRepository.class);

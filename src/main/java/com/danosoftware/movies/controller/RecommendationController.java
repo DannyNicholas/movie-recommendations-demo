@@ -2,20 +2,18 @@ package com.danosoftware.movies.controller;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
 @RequestMapping("/api/movies")
 public class RecommendationController {
 
     private final MovieService service;
 
-    public RecommendationController(@Autowired MovieService service) {
+    public RecommendationController(MovieService service) {
         this.service = service;
     }
 

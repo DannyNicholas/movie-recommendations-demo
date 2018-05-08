@@ -2,8 +2,6 @@ package com.danosoftware.movies.service;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,12 +12,10 @@ import java.util.stream.Collectors;
  * Movie Service implementation that retrieves movie
  * information from repository and filters on wanted criteria.
  */
-@Service
 public class FilterMovieService implements MovieService {
 
     private final MovieRepository repository;
 
-    @Autowired
     public FilterMovieService(final MovieRepository repository) {
         this.repository = repository;
     }
