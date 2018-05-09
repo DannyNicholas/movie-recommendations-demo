@@ -18,9 +18,13 @@ public class MovieRecommendationApplication {
 		MovieRepository repository = new StubMovieRepository();
 		MovieService service = new FilterMovieService(repository);
 
+		test(service);
+	}
 
-        // log results
-        Logger LOGGER = LoggerFactory.getLogger(MovieRecommendationApplication.class);
+	public static void test(MovieService service) {
+
+		// log results
+		Logger LOGGER = LoggerFactory.getLogger(MovieRecommendationApplication.class);
 
 		List<Movie> recommendations1 = service.recommend(
 				Optional.of("Sci-Fi"),
@@ -28,12 +32,5 @@ public class MovieRecommendationApplication {
 
 		LOGGER.info("Movies found: {}", recommendations1.size());
 		recommendations1.stream().map(Movie::toString).forEach(LOGGER::info);
-
-		List<Movie> recommendations2 = service.recommend(
-				Optional.empty(),
-				Optional.empty());
-
-		LOGGER.info("Movies found: {}", recommendations2.size());
-		recommendations2.stream().map(Movie::toString).forEach(LOGGER::info);
 	}
 }
