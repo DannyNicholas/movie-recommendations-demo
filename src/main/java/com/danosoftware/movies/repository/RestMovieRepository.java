@@ -3,7 +3,6 @@ package com.danosoftware.movies.repository;
 import com.danosoftware.movies.dto.Movie;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -19,10 +18,13 @@ import java.util.List;
 public class RestMovieRepository implements MovieRepository {
 
     private final RestTemplate restTemplate;
-    private final String host = "http://api.movie-service.com";
+    private final String host;
 
-    public RestMovieRepository(RestTemplateBuilder restTemplateBuilder) {
+    public RestMovieRepository(
+            RestTemplateBuilder restTemplateBuilder,
+            String host) {
         this.restTemplate = restTemplateBuilder.build();
+        this.host = host;
     }
 
     /**
