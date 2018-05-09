@@ -15,15 +15,15 @@ public class StubMovieRepository implements MovieRepository {
     private static final Logger logger = LoggerFactory.getLogger(StubMovieRepository.class);
 
     // stub recommended movies
-    private final List<Movie> stubMovies;
-
-    public StubMovieRepository(final List<Movie> stubMovies) {
-        this.stubMovies = stubMovies;
+    private final List<Movie> movies;
+    
+    public StubMovieRepository(final List<Movie> movies) {
+        this.movies = movies;
         logger.warn("Using Stub Movie Repository. Intended for local testing only.");
     }
 
     @Override
     public List<Movie> recommend() {
-        return stubMovies;
+        return movies;
     }
 }
