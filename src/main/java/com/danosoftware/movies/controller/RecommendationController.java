@@ -29,25 +29,4 @@ public class RecommendationController {
                 Optional.ofNullable(genre),
                 Optional.ofNullable(year));
     }
-
-    /**
-     * Get a movie using provided id.
-     */
-    @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
-    public @ResponseBody Movie getMovie(
-            @PathVariable Long movieId) {
-
-        return service.getMovie(movieId);
-    }
-
-    /**
-     * Add a new movie and return created id.
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus( HttpStatus.CREATED )
-    public @ResponseBody Long add(
-            @RequestBody Movie movie) {
-
-        return service.addMovie(movie);
-    }
 }

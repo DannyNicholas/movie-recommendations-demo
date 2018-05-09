@@ -46,47 +46,4 @@ public class RestMovieRepository implements MovieRepository {
 
         return response.getBody();
     }
-
-    /**
-     * Send a new movie to the REST service
-     *
-     * @param movie
-     * @return id of created movie
-     */
-    @Override
-    public Long addMovie(Movie movie) {
-
-        URI uri = UriComponentsBuilder
-                .fromUriString(host)
-                .path("/api/movies-service/add")
-                .build()
-                .toUri();
-
-        HttpEntity<Movie> entity = new HttpEntity<>(movie);
-
-        ResponseEntity<Long> response = restTemplate
-                .exchange(uri, HttpMethod.POST, entity, Long.class);
-
-        return response.getBody();
-    }
-
-    /**
-     * Retrieve a specific movie from the REST service using it's ID
-     * @param id
-     * @return movie
-     */
-    @Override
-    public Movie getMovie(Long id) {
-
-        URI uri = UriComponentsBuilder
-                .fromUriString(host)
-                .path("/api/movies-service/search/{id}")
-                .buildAndExpand(id)
-                .toUri();
-
-        ResponseEntity<Movie> response = restTemplate
-                .exchange(uri, HttpMethod.GET, null, Movie.class);
-
-        return response.getBody();
-    }
 }

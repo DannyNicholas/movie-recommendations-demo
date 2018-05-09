@@ -15,17 +15,4 @@ public interface MovieService {
             Optional<String> genre,
             Optional<Integer> year);
 
-    /**
-     * Add a new movie.
-     * Return the assigned id.
-     */
-    Long addMovie(
-            Movie movie);
-
-    /**
-     * Get the wanted movie using supplied id.
-     */
-    Movie getMovie(
-            Long id
-    );
 }

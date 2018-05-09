@@ -37,24 +37,6 @@ public class FilterMovieService implements MovieService {
     }
 
     /**
-     * Add a new movie and return ID
-     */
-    @Override
-    public Long addMovie(Movie movie) {
-
-        return repository.addMovie(movie);
-    }
-
-    /**
-     * Retrieve a specific movie using ID
-     */
-    @Override
-    public Movie getMovie(Long id) {
-
-        return repository.getMovie(id);
-    }
-
-    /**
      * Create a predicate that will allow filtering on optional genre and year released.
      * If no genre or year is provided all movies will pass the filter.
      */

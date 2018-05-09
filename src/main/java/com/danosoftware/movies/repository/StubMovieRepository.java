@@ -28,14 +28,4 @@ public class StubMovieRepository implements MovieRepository {
                 new Movie("Solaris","Sci-Fi",LocalDate.of(1972, 9, 26))
         );
     }
-
-    @Override
-    public Long addMovie(Movie movie) {
-        return 23L;
-    }
-
-    @Override
-    public Movie getMovie(Long id) {
-        return new Movie("Star Wars","Sci-Fi", LocalDate.of(1977, 5, 25));
-    }
 }
