@@ -19,6 +19,22 @@ Run normally `mvn spring-boot:run`
 
 To run using stub responses add `mvn spring-boot:run -Dspring-boot.run.profiles=stub`
 
+## Using Application
+
+### Movie Recommendations
+
+Example API calls to service.
+
+Get a list of all recommended movies:
+```
+http://localhost:8080/api/movies/recommendations
+```
+
+Get a list of all recommended movies for a specific genre and/or year:
+```
+http://localhost:8080/api/movies/recommendations?genre=Sci-Fi&year=1972
+```
+
 ## Docker
 
 ### Build a Docker image
