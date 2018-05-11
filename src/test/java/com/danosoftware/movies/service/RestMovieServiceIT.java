@@ -44,7 +44,7 @@ public class RestMovieServiceIT {
     public void shouldReturnFilteredListForOptionalYear() {
 
         // find all recommended movies released in 1972
-        List<Movie> movies = this.movieService.recommend(Optional.ofNullable(null), Optional.of(1972));
+        List<Movie> movies = this.movieService.recommend(Optional.empty(), Optional.of(1972));
 
         assertThat(movies.size(), equalTo(2));
         assertThat(movies.get(0), equalTo(movieGodfather()));
@@ -55,7 +55,7 @@ public class RestMovieServiceIT {
     public void shouldReturnFilteredListForOptionalGenre() {
 
         // find all recommended movies for the Sci-Fi genre
-        List<Movie> movies = this.movieService.recommend(Optional.of("Sci-Fi"), Optional.ofNullable(null));
+        List<Movie> movies = this.movieService.recommend(Optional.of("Sci-Fi"), Optional.empty());
 
         assertThat(movies.size(), equalTo(2));
         assertThat(movies.get(0), equalTo(movieStarWars()));
@@ -66,7 +66,7 @@ public class RestMovieServiceIT {
     public void shouldReturnFilteredListForOptionalYearAndGenre() {
 
         // find all recommended movies for the Sci-Fi genre released in 1972
-        List<Movie> movies = this.movieService.recommend(Optional.of("Sci-Fi"), Optional.ofNullable(1972));
+        List<Movie> movies = this.movieService.recommend(Optional.of("Sci-Fi"), Optional.of(1972));
 
         assertThat(movies.size(), equalTo(1));
         assertThat(movies.get(0), equalTo(movieSolaris()));
@@ -76,7 +76,7 @@ public class RestMovieServiceIT {
     public void shouldReturnUnFilteredList() {
 
         // find all recommended movies
-        List<Movie> movies = this.movieService.recommend(Optional.ofNullable(null), Optional.ofNullable(null));
+        List<Movie> movies = this.movieService.recommend(Optional.empty(), Optional.empty());
 
         assertThat(movies.size(), equalTo(3));
         assertThat(movies.get(0), equalTo(movieStarWars()));
