@@ -16,7 +16,7 @@ It is recommended that you run using the h2 file based database - this will be s
 To run using responses from the h2 database add `--spring.profiles.active=h2`
 
 The h2 database is available at:
-http://<host>/h2
+http://host-name/h2
 
 ### Run application via Maven
 
