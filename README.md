@@ -11,7 +11,7 @@ mvn clean install
 
 Run main class `MovieRecommendationApplication.java`.
 
-It is recommend that you run using the h2 file based database - this will be set-up with default data when the service is started.
+It is recommended that you run using the h2 file based database - this will be set-up with default data when the service is started.
 
 To run using responses from the h2 database add `--spring.profiles.active=h2`
 
@@ -22,11 +22,11 @@ http://<host>/h2
 
 Run normally `mvn spring-boot:run`
 
-To run using stub responses add `mvn spring-boot:run -Dspring-boot.run.profiles=h2`
+To run using the h2 database add `mvn spring-boot:run -Dspring-boot.run.profiles=h2`
 
-### Provide stub responses
+### Stub responses
 
-To run using stub responses replace 'h2' with 'stub'
+To run using stub responses replace 'h2' with 'stub'. This can be useful for testing static responses without a real database.
 
 ## Using Application
 

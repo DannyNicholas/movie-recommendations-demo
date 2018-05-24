@@ -38,7 +38,7 @@ public class RecommendationController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
     public @ResponseBody Movie getMovie(
-            @PathVariable Long movieId) throws MovieNotFoundException {
+            @PathVariable Long movieId) {
 
         Optional<Movie> movie = service.getMovie(movieId);
         if (movie.isPresent()) {
