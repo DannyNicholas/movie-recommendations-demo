@@ -3,6 +3,7 @@ package com.danosoftware.movies.repository;
 import com.danosoftware.movies.dto.Movie;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MovieRepository {
 
@@ -20,5 +21,5 @@ public interface MovieRepository {
     /**
      * Get the wanted movie using supplied id.
      */
-    Movie getMovie(Long id);
+    Optional<Movie> getMovie(Long id);
 }

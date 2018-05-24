@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Movie Repository implementation that retrieves movie
@@ -86,7 +87,7 @@ public class RestMovieRepository implements MovieRepository {
      * @return movie
      */
     @Override
-    public Movie getMovie(Long id) {
+    public Optional<Movie> getMovie(Long id) {
 
         URI uri = UriComponentsBuilder
                 .fromUriString(host)
@@ -97,6 +98,6 @@ public class RestMovieRepository implements MovieRepository {
         ResponseEntity<Movie> response = restTemplate
                 .exchange(uri, HttpMethod.GET, null, Movie.class);
 
-        return response.getBody();
+        return Optional.ofNullable(response.getBody());
     }
 }

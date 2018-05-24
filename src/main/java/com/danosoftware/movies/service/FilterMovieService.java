@@ -53,7 +53,7 @@ public class FilterMovieService implements MovieService {
      * Retrieve a specific movie using ID
      */
     @Override
-    public Movie getMovie(Long id) {
+    public Optional<Movie> getMovie(Long id) {
 
         return repository.getMovie(id);
     }

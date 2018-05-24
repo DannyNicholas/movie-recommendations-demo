@@ -32,4 +32,22 @@ public class RecommendationConfig {
                 new Movie("Solaris", "Sci-Fi", LocalDate.of(1972, 9, 26))
         );
     }
+
+    @Bean
+    @Profile("h2")
+    List<Movie> defaultMovies () {
+        return Arrays.asList(
+                new Movie("Star Wars", "Sci-Fi", LocalDate.of(1977, 5, 25)),
+                new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24)),
+                new Movie("Solaris", "Sci-Fi", LocalDate.of(1972, 9, 26)),
+                new Movie("Blade Runner", "Sci-Fi", LocalDate.of(1982, 6, 25))
+        );
+    }
+
+    @Bean
+    @Profile("h2")
+    @Qualifier("initialiseDatabase")
+    boolean initialiseDatabase(@Value("${movies.service.database.initialise}") boolean initialiseDatabase) {
+        return initialiseDatabase;
+    }
 }
