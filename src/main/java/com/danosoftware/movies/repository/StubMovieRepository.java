@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Provide stub responses to repository requests.
@@ -37,7 +38,7 @@ public class StubMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Movie getMovie(Long id) {
-        return movies.get(0);
+    public Optional<Movie> getMovie(Long id) {
+        return Optional.of(movies.get(0));
     }
 }

@@ -25,7 +25,7 @@ public interface MovieService {
     /**
      * Get the wanted movie using supplied id.
      */
-    Movie getMovie(
+    Optional<Movie> getMovie(
             Long id
     );
 }

@@ -1,6 +1,7 @@
 package com.danosoftware.movies.controller;
 
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.exception.MovieNotFoundException;
 import com.danosoftware.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,14 @@ public class RecommendationController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{movieId}")
     public @ResponseBody Movie getMovie(
-            @PathVariable Long movieId) {
+            @PathVariable Long movieId) throws MovieNotFoundException {
 
-        return service.getMovie(movieId);
+        Optional<Movie> movie = service.getMovie(movieId);
+        if (movie.isPresent()) {
+            return movie.get();
+        }
+
+        throw new MovieNotFoundException(movieId);
     }
 
     /**
