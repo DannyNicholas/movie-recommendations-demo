@@ -1,4 +1,4 @@
-variable ecs_load_bal_sec_grp_id {
+variable alb_sec_grp_id {
   type = string
 }
 
@@ -16,11 +16,11 @@ variable "consistent_url" {
   default     = ""
 }
 
-# variable "private_hosted_zone_id" {
-#    type = string
-# }
-
 variable "alb_target_group_name" {
+  type = string
+}
+
+variable "alb_sec_grp_name" {
   type = string
 }
 

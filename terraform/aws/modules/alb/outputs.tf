@@ -1,6 +1,3 @@
-# output "sec_grp_id" {
-#   value = "${data.aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id}"
-# }
 
 output "target_group_id" {
   value = "${aws_lb_target_group.movie_recommendations-ecs-tg.id}"

@@ -1,17 +1,10 @@
 ## Load Balancer creation
 
-## Security group for the load balancer
-# data "aws_security_group" "movie_recommendations_ecs_load_bal_sec_grp" {
-#   name        = "movie_recommendations-lb-sec-grp"
-#   vpc_id      = var.vpc_id
-# }
-
 resource "aws_alb" "movie-ecs-alb" {
   name               = var.alb_name
   internal           = var.internal
   load_balancer_type = "application"
-  # security_groups    = [data.aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id]
-  security_groups    = [var.ecs_load_bal_sec_grp_id]
+  security_groups    = [var.alb_sec_grp_id]
   subnets            = var.vpc_subnet_ids
 
   tags = {
