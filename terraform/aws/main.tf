@@ -11,15 +11,16 @@ module "vpc" {
   route_table_name = var.route_table_name
 }
 
-# module "alb" {
-#   source                 = "./modules/alb"
-#   vpc_id                 = module.vpc.id
-#   vpc_subnet_ids         = module.vpc.subnet_ids
-#   alb_name               = "${var.alb_name}-${terraform.workspace}"
-#   alb_target_group_name  = "${var.alb_target_group_name}-${terraform.workspace}"
-#   movie_recommendations_ecs_load_bal_sec_grp = movie_recommendations_ecs_load_bal_sec_grp
-#   # private_hosted_zone_id = module.vpc.private_hosted_zone_id
-# }
+module "alb" {
+  source                 = "./modules/alb"
+  vpc_id                 = module.vpc.id
+  vpc_subnet_ids         = module.vpc.subnet_ids
+  alb_name               = "${var.alb_name}-${terraform.workspace}"
+  alb_target_group_name  = "${var.alb_target_group_name}-${terraform.workspace}"
+  #movie_recommendations_ecs_load_bal_sec_grp = movie_recommendations_ecs_load_bal_sec_grp
+  # private_hosted_zone_id = module.vpc.private_hosted_zone_id
+   ecs_load_bal_sec_grp_id = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+}
 
 ## Security group for ECS instances
 resource "aws_security_group" "movie_recommendations_ecs_sec_grp" {

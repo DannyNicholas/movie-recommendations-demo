@@ -1,24 +1,40 @@
-variable "alb_name" {}
+variable ecs_load_bal_sec_grp_id {
+  type = string
+}
+
+variable "alb_name" {
+  type = string
+}
 
 variable "vpc_subnet_ids" {
-  type = list
+  type = list(string)
 }
 
 variable "consistent_url" {
+  type        = string
   description = "the private hosted zone URL to map to load balancer"
   default     = ""
 }
 
-# variable "private_hosted_zone_id" {}
+# variable "private_hosted_zone_id" {
+#    type = string
+# }
 
-variable "alb_target_group_name" {}
+variable "alb_target_group_name" {
+  type = string
+}
 
-variable "vpc_id" {}
+variable "vpc_id" {
+  type = string
+}
+
 variable "internal" {
+  type    = string
   default = "false"
 }
 
 variable "project-name-value" {
+  type        = string
   description = "Project tag value, used for tracking costs"
-  default = "dn-movie-recommendations"
+  default     = "dn-movie-recommendations"
 }
