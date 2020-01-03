@@ -48,10 +48,10 @@ variable "autoscale_max" {
     default = 5
 }
 
-variable "autoscale_desired" {
+variable "instances_desired" {
   description = "Specify the desired number of instances for the cluster"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "vpc_subnet_ids" {
@@ -67,7 +67,7 @@ variable "ssh_key_name" {
 variable "project-name-value" {
   description = "Project tag value, used for tracking costs"
   type        = string
-  default     = "data-engineering-comparator"
+  default     = "dn-movie-recommendations"
 }
 
 variable "alb_sec_grp_id" {

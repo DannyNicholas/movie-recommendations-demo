@@ -4,6 +4,12 @@ ECR_REGION=eu-west-1
 ECR_REPO=dn_movie_recommendation_api
 ECR_HOST=423299723934.dkr.ecr.eu-west-1.amazonaws.com
 
+# Any subsequent(*) commands which fail will cause the shell script to exit immediately
+set -e
+
+echo "Building JAR..."
+mvn clean package
+
 echo "Login to AWS ECR..."
 # stripping out https:// from login prevents a credentials manager bug with Docker for Windows
 # see: https://docs.aws.amazon.com/AmazonECR/latest/userguide/common-errors-docker.html#error-403

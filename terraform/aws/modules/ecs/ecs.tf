@@ -8,6 +8,10 @@ resource "aws_ecs_cluster" "movie_recommendation-ecs-cluster" {
   }
 }
 
+provider "template" {
+  version = "~> 2.1"
+}
+
 ## template file to initialise EC2 instance on start-up.
 # this is primarily used to identify the cluster that
 # the EC2 instance belongs to.
@@ -16,11 +20,6 @@ data "template_file" "init" {
   vars  = {
     ecs_cluster_name = "${var.ecs_cluster_name}"
   }
-}
-
-## ECR Repository containing service's docker image
-data "aws_ecr_repository" "movie_recommendation_api_repo" {
-  name = "dn_movie_recommendation_api"
 }
 
 ## List of suitable Amazon Machine Images
@@ -63,7 +62,7 @@ resource "aws_autoscaling_group" "ecs-cluster" {
 
   min_size             = var.autoscale_min
   max_size             = var.autoscale_max
-  desired_capacity     = var.autoscale_desired
+  desired_capacity     = var.instances_desired
   health_check_type    = "EC2"
   launch_configuration = aws_launch_configuration.ecs.name
 

@@ -12,22 +12,37 @@ module "vpc" {
 }
 
 module "alb" {
-  source                 = "./modules/alb"
-  vpc_id                 = module.vpc.id
-  vpc_subnet_ids         = module.vpc.subnet_ids
-  alb_name               = "${var.alb_name}-${terraform.workspace}"
-  alb_target_group_name  = "${var.alb_target_group_name}-${terraform.workspace}"
-  alb_sec_grp_name       = var.lb-sec-grp
-  alb_sec_grp_id         = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+  source                = "./modules/alb"
+  vpc_id                = module.vpc.id
+  vpc_subnet_ids        = module.vpc.subnet_ids
+  alb_name              = "${var.alb_name}-${terraform.workspace}"
+  alb_target_group_name = "${var.alb_target_group_name}-${terraform.workspace}"
+  alb_sec_grp_name      = var.lb-sec-grp
+  alb_sec_grp_id        = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
 }
 
 module "ecs" {
-  source         = "./modules/ecs"
-  region         = "${var.region}"
-  vpc_id         = module.vpc.id
-  vpc_subnet_ids = module.vpc.subnet_ids
-  alb_sec_grp_id = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
-  ecs_sec_grp_id = aws_security_group.movie_recommendations_ecs_sec_grp.id
+  source            = "./modules/ecs"
+  region            = "${var.region}"
+  vpc_id            = module.vpc.id
+  vpc_subnet_ids    = module.vpc.subnet_ids
+  alb_sec_grp_id    = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+  ecs_sec_grp_id    = aws_security_group.movie_recommendations_ecs_sec_grp.id
+  instance_type     = "t2.medium"
+  instances_desired = 2
+}
+
+module "services" {
+  source                = "./modules/services"
+  ecs_service_role_arn  = "${module.ecs.service_role_arn}"
+  ecs_service_policy_id = "${module.ecs.service_policy_id}"
+  cluster_id            = "${module.ecs.cluster_id}"
+  region                = "${var.region}"
+  vpc_id                = module.vpc.id
+  vpc_subnet_ids        = module.vpc.subnet_ids
+  ecs_sec_grp_id        = aws_security_group.movie_recommendations_ecs_sec_grp.id
+  loadbalancer_id       = "${module.alb.target_group_id}"
+  tasks_desired         = 4
 }
 
 ## Security group for ECS instances

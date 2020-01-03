@@ -1,8 +1,3 @@
-
-output "movie_recommendation_api_repo_url" {
-  value = "${data.aws_ecr_repository.movie_recommendation_api_repo.repository_url}"
-}
-
 output "cluster_id" {
   value = "${aws_ecs_cluster.movie_recommendation-ecs-cluster.id}"
 }
