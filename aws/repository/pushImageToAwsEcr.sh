@@ -7,6 +7,29 @@ ECR_HOST=423299723934.dkr.ecr.eu-west-1.amazonaws.com
 # Any subsequent(*) commands which fail will cause the shell script to exit immediately
 set -e
 
+# We must switch to directory containing maven POM and Docker file.
+# It is possible this script is being run from another directory so relative paths will not work.
+# So we must find the actual path to our script (not where it was run from) and then navigate up 2 directories.
+dir_path=$(dirname ${BASH_SOURCE[0]})
+cd $dir_path/../..
+echo Running script from directory:
+pwd
+
+docker_file=./Dockerfile
+if [ -f "$docker_file" ]; then
+    echo "Docker file exists"
+else
+    echo "Docker file does not exist in current directory. Failed."
+    exit
+fi
+pom_file=./pom.xml
+if [ -f "$pom_file" ]; then
+    echo "Maven POM file exists"
+else
+    echo "Maven POM file does not exist in current directory. Failed."
+    exit
+fi
+
 echo "Building JAR..."
 mvn clean package
 
