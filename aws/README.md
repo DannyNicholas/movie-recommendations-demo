@@ -20,4 +20,4 @@ Once a Docker image of the service has been pushed to AWS, it can be deployed as
 
 The deployment process has been scripted for consistency and ease-of-use using Terraform.
 
-The [Terraform Deployment section](./terraform) explains how to deploy and run the service on AWS using Terraform.
+The [Deploying Service to AWS using Terraform](./terraform) section explains how to deploy and run the service on AWS using Terraform.
