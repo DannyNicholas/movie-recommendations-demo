@@ -18,7 +18,16 @@ module "alb" {
   alb_name               = "${var.alb_name}-${terraform.workspace}"
   alb_target_group_name  = "${var.alb_target_group_name}-${terraform.workspace}"
   alb_sec_grp_name       = var.lb-sec-grp
+  alb_sec_grp_id         = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+}
+
+module "ecs" {
+  source         = "./modules/ecs"
+  region         = "${var.region}"
+  vpc_id         = module.vpc.id
+  vpc_subnet_ids = module.vpc.subnet_ids
   alb_sec_grp_id = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+  ecs_sec_grp_id = aws_security_group.movie_recommendations_ecs_sec_grp.id
 }
 
 ## Security group for ECS instances
@@ -42,8 +51,8 @@ resource "aws_security_group" "movie_recommendations_ecs_sec_grp" {
   }
 
   tags = {
-    Name = var.ecs-sec-grp
-    Project = var.project-name-value
+    Name        = var.ecs-sec-grp
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }
@@ -69,8 +78,8 @@ resource "aws_security_group" "movie_recommendations_ecs_load_bal_sec_grp" {
   }
 
   tags = {
-    Name = var.lb-sec-grp
-    Project = var.project-name-value
+    Name        = var.lb-sec-grp
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }
