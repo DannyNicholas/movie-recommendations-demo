@@ -1,16 +1,21 @@
-# Deploying Service to AWS
+# Deploying to Amazon Web Services (AWS)
 
-The following section explains how to deploy the Movie Recommendation service to AWS.
+The following sections explain how to deploy the Movie Recommendation service to Amazon Web Service (AWS).
 
-This is covered in two sections:
+Specifically, deploying to a cluster running multiple containers behind an application load balancer. Each container will run a single instance of the service. The application load balancer routes API requests to different containers in a "round-robin" fashion. 
 
-## Repository
+The AWS deployment process is broken down in two steps:
 
-This section explains how to create a Docker image of the service and push this to a AWS Elastic Container Registry (ECS).
+## Image Repository
 
-Once pushed to ECR, the image can be deployed to one or more containers in a AWS cluster.
+Before we can spin-up any container instances, we must provide AWS with a Docker image of the service.
+
+The [Image Repository section](./repository) explains the process of how to create a Docker image of the service and push this to the AWS Elastic Container Registry (ECR) using the provided script.
 
 ## Terraform Deployment
 
-This section explains how to deploy and run the service within a AWS Elastic Container Service (ECS).
+Once a Docker image of the service has been pushed to AWS, it can be deployed as part of a cluster using the AWS Elastic Container Service (ECS).
 
+The deployment process has been scripted for consistency and ease-of-use using Terraform.
+
+The [Terraform Deployment section](./terraform) explains how to deploy and run the service on AWS using Terraform.

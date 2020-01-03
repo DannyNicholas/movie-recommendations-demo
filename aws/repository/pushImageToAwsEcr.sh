@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# The values below are provided as an example only.
+# You must update this for your own ECR repository.
 ECR_REGION=eu-west-1
 ECR_REPO=dn_movie_recommendation_api
 ECR_HOST=423299723934.dkr.ecr.eu-west-1.amazonaws.com
