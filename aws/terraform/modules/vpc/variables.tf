@@ -42,5 +42,4 @@ variable "availability_zone_2" {
 variable "project-name-value" {
   type        = string
   description = "Project tag value, used for tracking costs"
-  default     = "dn-movie-recommendations"
 }

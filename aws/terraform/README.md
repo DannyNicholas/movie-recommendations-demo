@@ -43,7 +43,6 @@ The default variables are provided within `variables.tf` in this directory or wi
 - `service_discovery_domain_name` (domain name used by service discovery)
 - `tasks_desired` (desired number of service tasks i.e. service container instances)
 
-**NOTE** need to consolidate `project-name-value`
 **NOTE** need to provide variable for ECR repo name
 
 

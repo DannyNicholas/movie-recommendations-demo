@@ -4,11 +4,12 @@ provider "aws" {
 }
 
 module "vpc" {
-  source           = "./modules/vpc"
-  vpc_name         = var.vpc_name
-  int_gateway_name = var.int_gateway_name
-  sub_net_name     = var.sub_net_name
-  route_table_name = var.route_table_name
+  source             = "./modules/vpc"
+  vpc_name           = var.vpc_name
+  int_gateway_name   = var.int_gateway_name
+  sub_net_name       = var.sub_net_name
+  route_table_name   = var.route_table_name
+  project-name-value = var.project-name-value
 }
 
 module "alb" {
@@ -19,17 +20,19 @@ module "alb" {
   alb_target_group_name = "${var.alb_target_group_name}-${terraform.workspace}"
   alb_sec_grp_name      = var.lb-sec-grp
   alb_sec_grp_id        = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+  project-name-value    = var.project-name-value
 }
 
 module "ecs" {
-  source            = "./modules/ecs"
-  region            = "${var.region}"
-  vpc_id            = module.vpc.id
-  vpc_subnet_ids    = module.vpc.subnet_ids
-  alb_sec_grp_id    = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
-  ecs_sec_grp_id    = aws_security_group.movie_recommendations_ecs_sec_grp.id
-  instance_type     = "t2.medium"
-  instances_desired = 2
+  source             = "./modules/ecs"
+  region             = "${var.region}"
+  vpc_id             = module.vpc.id
+  vpc_subnet_ids     = module.vpc.subnet_ids
+  alb_sec_grp_id     = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
+  ecs_sec_grp_id     = aws_security_group.movie_recommendations_ecs_sec_grp.id
+  instance_type      = "t2.medium"
+  instances_desired  = 2
+  project-name-value = var.project-name-value
 }
 
 module "services" {
@@ -43,6 +46,7 @@ module "services" {
   ecs_sec_grp_id        = aws_security_group.movie_recommendations_ecs_sec_grp.id
   loadbalancer_id       = "${module.alb.target_group_id}"
   tasks_desired         = 4
+  project-name-value    = var.project-name-value
 }
 
 ## Security group for ECS instances

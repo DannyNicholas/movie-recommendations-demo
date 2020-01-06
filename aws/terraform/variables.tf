@@ -50,5 +50,6 @@ variable "alb_target_group_name" {
 
 variable "project-name-value" {
   type    = string
+  description = "Project tag value, used for tracking costs"
   default = "dn-movie-recommendations"
 }

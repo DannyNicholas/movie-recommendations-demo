@@ -67,7 +67,6 @@ variable "ssh_key_name" {
 variable "project-name-value" {
   description = "Project tag value, used for tracking costs"
   type        = string
-  default     = "dn-movie-recommendations"
 }
 
 variable "alb_sec_grp_id" {
