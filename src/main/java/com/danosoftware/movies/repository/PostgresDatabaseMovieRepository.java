@@ -11,13 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Database implementation using H2.
- *
- * H2 Database available at...
- * http://<host>:<port>/<path>
- * when service is running.
- *
- * eg: http://localhost:8080/h2
+ * Database implementation using Postgres.
  */
 @Repository
 @Profile("postgres")
