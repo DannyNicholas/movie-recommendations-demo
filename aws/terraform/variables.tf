@@ -49,7 +49,31 @@ variable "alb_target_group_name" {
 }
 
 variable "project-name-value" {
-  type    = string
+  type        = string
   description = "Project tag value, used for tracking costs"
-  default = "dn-movie-recommendations"
+  default     = "dn-movie-recommendations"
+}
+
+variable "movie-service-image-repository-name" {
+  type        = string
+  description = "Name of the ECR repository where the service's container image is stored"
+  default     = "dn_movie_recommendation_api"
+}
+
+variable "ec2_instance_type" {
+  type        = string
+  description = "EC2 instance type to use within cluster"
+  default     = "t2.medium"
+}
+
+variable "ec2_instances_desired" {
+  type        = number
+  description = "Desired number of EC2 instances within cluster (must be within cluster's autoscale min and max variables)"
+  default     = 2
+}
+
+variable "service_tasks_desired" {
+  type        = number
+  description = "Desired number of service tasks to create within cluster"
+  default     = 4
 }

@@ -52,3 +52,8 @@ variable "project-name-value" {
   type = string
   description = "Project tag value, used for tracking costs"
 }
+
+variable "service-image-repository-name" {
+  type        = string
+  description = "Name of the ECR repository where the service's container image is stored"
+}

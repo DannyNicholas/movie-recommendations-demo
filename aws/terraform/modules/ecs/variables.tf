@@ -29,7 +29,6 @@ variable "autoscale_min" {
 
 variable "instance_type" {
     type    = string
-    default = "t2.medium"
 }
 
 variable "amis" {
@@ -45,7 +44,7 @@ variable "region" {}
 
 variable "autoscale_max" {
     type    = number
-    default = 5
+    default = 4
 }
 
 variable "instances_desired" {

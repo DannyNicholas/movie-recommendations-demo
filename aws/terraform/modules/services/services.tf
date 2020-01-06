@@ -5,7 +5,7 @@ locals {
 
 ## ECR Repository containing service's docker image
 data "aws_ecr_repository" "movie_recommendation_api_repo" {
-  name = "dn_movie_recommendation_api"
+  name = var.service-image-repository-name
 }
 
 ## Cloud Watch log group for service

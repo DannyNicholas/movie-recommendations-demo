@@ -30,21 +30,19 @@ The default variables are provided within `variables.tf` in this directory or wi
 `variables.tf`
 - `region` (your AWS region)
 - `project-name-value` (the project tag assigned to created AWS resources)
+- `movie-service-image-repository-name` (name of your ECR repository that holds the movie service Docker image)
+- `ec2_instance_type` (type of EC2 instances created in cluster e.g. `t2.medium`)
+- `ec2_instances_desired` (desired number of EC2 instances created in cluster - must fall within `autoscale_min` and `autoscale_max`)
+- `service_tasks_desired` (desired number of service tasks to create across cluster i.e. service container instances)
 
 `modules/ecs/variables.tf`
-- `instance_type` (type of EC2 instances created in cluster e.g. `t2.medium`)
-- `instances_desired` (desired number of EC2 instances created in cluster)
-- `autoscale_min` (minimum number of EC2 instances created in cluster)
-- `autoscale_max` (maximum number of EC2 instances created in cluster)
+- `autoscale_min` (minimum number of EC2 instances allowed in cluster)
+- `autoscale_max` (maximum number of EC2 instances allowed in cluster)
 - `ssh_key_name` (name of key if SSH is required to EC2 instances - also needs enabling in `ecs.tf` script)
 
 `modules/services/variables.tf`
 - `ecs_movie_recommendation_api_log_group_name` (name of CloudWatch log group to be created)
 - `service_discovery_domain_name` (domain name used by service discovery)
-- `tasks_desired` (desired number of service tasks i.e. service container instances)
-
-**NOTE** need to provide variable for ECR repo name
-
 
 
 ## Running Terraform Deployment Script
