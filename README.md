@@ -51,6 +51,7 @@ Create an empty database called `movies` within pgAdmin.
 ![alt text](./assets/create-database.JPG "Create Movies Database")
 
 To allow the Movie Recommendations service to connect to the local Postgres database, run with:
+
 ```mvn spring-boot:run -Dspring-boot.run.profiles=postgres```
 
 On start-up, the service will populate the database with default data. All API requests will now result in reads from and writes to our local Postgres database.
