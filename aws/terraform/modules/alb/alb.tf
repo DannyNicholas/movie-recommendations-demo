@@ -8,8 +8,8 @@ resource "aws_alb" "movie-ecs-alb" {
   subnets            = var.vpc_subnet_ids
 
   tags = {
-    Name = var.alb_name
-    Project = var.project-name-value
+    Name        = var.alb_name
+    Project     = var.project-name-value
     Environment = terraform.workspace  
   }
 }
@@ -43,8 +43,8 @@ resource "aws_lb_target_group" "movie_recommendations-ecs-tg" {
   }
 
   tags = {
-    Name = var.alb_target_group_name
-    Project = var.project-name-value
+    Name        = var.alb_target_group_name
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }

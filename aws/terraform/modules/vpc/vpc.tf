@@ -5,8 +5,8 @@ resource "aws_vpc" "movie_recommendations_vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = var.vpc_name
-    Project = var.project-name-value
+    Name        = var.vpc_name
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 
@@ -18,8 +18,8 @@ resource "aws_internet_gateway" "movie_recommendations_int_gateway" {
   vpc_id = aws_vpc.movie_recommendations_vpc.id
 
   tags = {
-    Name = var.int_gateway_name
-    Project = var.project-name-value
+    Name        = var.int_gateway_name
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }
@@ -35,8 +35,8 @@ resource "aws_route_table" "movie_recommendations_ecs_vpc_external_route_table" 
   }
 
   tags = {
-    Name = var.route_table_name
-    Project = var.project-name-value
+    Name        = var.route_table_name
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }
@@ -48,8 +48,8 @@ resource "aws_subnet" "movie_recommendations_ecs_vpc_sub_1" {
   availability_zone = var.availability_zone_1
 
   tags = {
-    Name = "${var.sub_net_name}-1"
-    Project = var.project-name-value
+    Name        = "${var.sub_net_name}-1"
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }
@@ -61,8 +61,8 @@ resource "aws_subnet" "movie_recommendations_ecs_vpc_sub_2" {
   availability_zone = var.availability_zone_2
 
   tags = {
-    Name = "${var.sub_net_name}-2"
-    Project = var.project-name-value
+    Name        = "${var.sub_net_name}-2"
+    Project     = var.project-name-value
     Environment = terraform.workspace
   }
 }

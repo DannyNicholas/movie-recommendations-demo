@@ -40,7 +40,7 @@ docker run -d
     -d postgres
 ```
 
-This will pull the Docker image if needed and then start Postgres on port 5432.
+This will pull the Postgres image if needed and then start Postgres on port 5432.
 
 Once started, it is recommended to use pgAdmin to review the database server. Connect to the `movies-postgres` database server using the credentials below:
 

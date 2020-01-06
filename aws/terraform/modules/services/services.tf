@@ -12,7 +12,7 @@ data "aws_ecr_repository" "movie_recommendation_api_repo" {
 resource "aws_cloudwatch_log_group" "dn-movie-recommendations-log-group" {
   name = local.api_log_group_name
   tags = {
-    Project = "${var.project-name-value}"
+    Project     = "${var.project-name-value}"
     Environment = "${terraform.workspace}"  
   }
 }
@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
   family       = "dn-movie-recommendations-service"
   network_mode = "bridge"
   tags = {
-    Project = var.project-name-value
+    Project     = var.project-name-value
     Environment = terraform.workspace  
   }
 
@@ -127,7 +127,7 @@ resource "aws_ecs_service" "movie_recommendations-ecs-service-api" {
     null_resource.alb_exists
   ]
   tags = {
-    Project = var.project-name-value
+    Project     = var.project-name-value
     Environment = terraform.workspace 
   }
 }
