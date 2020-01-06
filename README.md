@@ -97,5 +97,10 @@ docker container stop <Container NAME or ID>
 
 This guide was based on: https://spring.io/guides/gs/spring-boot-docker/
 
+## Deploying to AWS
+
+This application can also be deployed to Amazon Web Services (AWS) and run within multiple containers as part of a cluster.
+
+Please read: [Deploying to Amazon Web Services (AWS)](./aws).
 
 

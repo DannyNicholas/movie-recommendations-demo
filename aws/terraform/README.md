@@ -8,6 +8,8 @@ For more information, read the [Terraform Getting Started Guide](https://learn.h
 
 **IMPORTANT:** It is assumed you have the AWS CLI available and AWS credentials are correctly configured using `aws configure`. For more information of configuring your AWS CLI, read Amazon's guide to the [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
+
+
 ## Deployment Objectives
 
 The deployment scripts aim to achieve the following.
@@ -16,6 +18,8 @@ The deployment scripts aim to achieve the following.
 - Create an Amazon Elastic Container Service cluster.
 - Deploy multiple instances of our service within the cluster.
 - Create an application load-balancer as the entry point to our service API. 
+
+
 
 ## Configuring Terraform Variables
 
@@ -42,14 +46,90 @@ The default variables are provided within `variables.tf` in this directory or wi
 **NOTE** need to consolidate `project-name-value`
 **NOTE** need to provide variable for ECR repo name
 
+
+
 ## Running Terraform Deployment Script
 
-Once configured the deployment script can be run.
+Once the Terraform scripts and variables have been configured, they can be run using the [Terraform CLI](https://www.terraform.io/docs/commands/index.html).
+
+
+### Initialising
+
+Before running for the first time, Terraform must be initialised. Navigate to this `terraform` directory and run the command below.
 
 ```terraform init```
 
+
+### Planned Dry-Run
+
+Once successfully initialised, it is possible to perform a planned "dry-run" deployment. A dry-run displays the resources that would be created if the deployment was being run for real. This can confirm the scripts are correctly configured before deploying. This "dry-run" plan is triggered using the `plan` command below.
+
 ```terraform plan```
+
+**NOTE** No real AWS resources are created using `plan`.
+
+
+### Deployment
+
+If the plan ran successfully, we are now ready to deploy for real using the `apply` command below.
 
 ```terraform apply```
 
-Returns load balancer DNS name. Use for testing.
+**NOTE** `apply` __will__ create real AWS resources and you will start being charged by AWS for any resources created.
+
+After a successful deployment, the script will output the DNS name of the created load balancer that is the entry point of our application. For example:
+
+```
+Outputs:
+application_load_balancer_dns_name = movie-api-server-alb-default-123456789.eu-west-1.elb.amazonaws.com
+```
+
+
+### Destroy
+
+It is important to destroy the AWS resources when no longer needed to avoid being charged by AWS for unused resources.
+
+All resources created during deployment can be destroyed using:
+```terraform destroy```
+
+
+
+## Testing the Application
+
+When deployment has been completed and the application is running, it can be tested using the DNS name returned after `terraform apply`.
+
+
+### Testing Service is Up
+
+First, we can test the service is up by calling the Spring Actuator health end-point at: `<Load Balancer DNS name>/actuator/health`
+
+For example:
+```curl http://movie-api-server-alb-default-123456789.eu-west-1.elb.amazonaws.com/actuator/health```
+
+This should return the JSON:
+
+```
+{
+    "status": "UP"
+}
+```
+
+If this returns: `503 Service Temporarily Unavailable` it is possible the service has started but is still initialising. Wait for a minute or two and try again.
+
+
+### Testing the API
+
+Once the service is up, we can attempt to make a real API call. For example: 
+```curl http://movie-api-server-alb-default-123456789.eu-west-1.elb.amazonaws.com/api/movies/recommendations```
+
+This should return a JSON array of movies. For example:
+```
+[
+    {
+        "name": "Star Wars",
+        "genre": "Sci-Fi",
+        "releaseDate": "1977-05-25"
+    },
+    ....
+]
+```
