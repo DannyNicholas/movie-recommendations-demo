@@ -57,3 +57,8 @@ variable "service-image-repository-name" {
   type        = string
   description = "Name of the ECR repository where the service's container image is stored"
 }
+
+variable "alb_arn" {
+  type        = string
+  description = "The Amazon Resource Name (ARN) of the ALB that this ECS Service will use as its load balancer."
+}

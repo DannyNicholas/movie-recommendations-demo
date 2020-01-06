@@ -10,3 +10,7 @@ output "listener_id" {
 output "dns_name" {
   value = "${aws_alb.movie-ecs-alb.dns_name}"
 }
+
+output "arn" {
+  value = "${aws_alb.movie-ecs-alb.arn}"
+}

@@ -45,6 +45,7 @@ module "services" {
   vpc_subnet_ids                = module.vpc.subnet_ids
   ecs_sec_grp_id                = aws_security_group.movie_recommendations_ecs_sec_grp.id
   loadbalancer_id               = "${module.alb.target_group_id}"
+  alb_arn                       = "${module.alb.arn}"
   tasks_desired                 = var.service_tasks_desired
   project-name-value            = var.project-name-value
   service-image-repository-name = var.movie-service-image-repository-name

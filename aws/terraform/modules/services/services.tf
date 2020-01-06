@@ -71,6 +71,12 @@ resource "null_resource" "movie_recommendations_ecs_service_dependencies" {
   }
 }
 
+resource "null_resource" "alb_exists" {
+  triggers = {
+    alb_name = "${var.alb_arn}"
+  }
+}
+
 ## Service Discovery DNS namespace
 resource "aws_service_discovery_private_dns_namespace" "movie_recommendations_discovery" {
   name        = "${terraform.workspace}.${var.service_discovery_domain_name}_movies_api"
@@ -115,9 +121,10 @@ resource "aws_ecs_service" "movie_recommendations-ecs-service-api" {
     container_port   = 8080
   }
 
-  ## Dependencies on the role policy and kafka
+  ## Dependencies on the role policy and the ALB being available
   depends_on = [
     null_resource.movie_recommendations_ecs_service_dependencies,
+    null_resource.alb_exists
   ]
   tags = {
     Project = var.project-name-value
