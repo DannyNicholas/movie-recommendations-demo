@@ -44,7 +44,7 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
         "command": [],
         "environment": [{
             "name": "SPRING_PROFILES_ACTIVE",
-            "value": "stub"
+            "value": "postgres"
         }],
         "logConfiguration": {
             "logDriver": "awslogs",
