@@ -62,3 +62,8 @@ variable "alb_arn" {
   type        = string
   description = "The Amazon Resource Name (ARN) of the ALB that this ECS Service will use as its load balancer."
 }
+
+variable "database_url" {
+  type        = string
+  description = "URL of database"
+}

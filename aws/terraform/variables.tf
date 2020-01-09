@@ -33,9 +33,15 @@ variable "ecs-sec-grp" {
   type    = string
   default = "movie-recommendations-ecs-sec-grp"
 }
+
 variable "lb-sec-grp" {
   type    = string
   default = "movie-recommendations-lb-sec-grp"
+}
+
+variable "postgres-sec-grp" {
+  type    = string
+  default = "movie-recommendations-postgres-sec-grp"
 }
 
 variable "alb_name" {
@@ -76,4 +82,16 @@ variable "service_tasks_desired" {
   type        = number
   description = "Desired number of service tasks to create within cluster"
   default     = 4
+}
+
+variable "database-identifier" {
+  type        = string
+  description = "Database identifier"
+  default     = "dn-movies-database"
+}
+
+variable "database-name" {
+  type        = string
+  description = "Database name"
+  default     = "movies"
 }

@@ -42,10 +42,16 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
         "essential": true,
         "entryPoint": [],
         "command": [],
-        "environment": [{
+        "environment": [
+          {
             "name": "SPRING_PROFILES_ACTIVE",
             "value": "postgres"
-        }],
+          },
+          {
+            "name": "SPRING_DATASOURCE_URL",
+            "value": "${var.database_url}"
+          }
+        ],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
