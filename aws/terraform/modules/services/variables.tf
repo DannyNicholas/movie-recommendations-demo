@@ -67,3 +67,13 @@ variable "database_url" {
   type        = string
   description = "URL of database"
 }
+
+variable "database_username" {
+  type        = string
+  description = "Database username"
+}
+
+variable "database_password" {
+  type        = string
+  description = "Database password"
+}

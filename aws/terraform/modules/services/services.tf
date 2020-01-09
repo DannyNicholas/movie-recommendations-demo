@@ -50,6 +50,14 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
           {
             "name": "SPRING_DATASOURCE_URL",
             "value": "${var.database_url}"
+          },
+          {
+            "name": "SPRING_DATASOURCE_USERNAME",
+            "value": "${var.database_username}"
+          },
+          {
+            "name": "SPRING_DATASOURCE_PASSWORD",
+            "value": "${var.database_password}"
           }
         ],
         "logConfiguration": {

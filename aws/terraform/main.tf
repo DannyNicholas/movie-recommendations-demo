@@ -50,6 +50,8 @@ module "services" {
   project-name-value            = var.project-name-value
   service-image-repository-name = var.movie-service-image-repository-name
   database_url                  = "${module.database.database_url}"
+  database_username             = "${module.database.database_username}"
+  database_password             = "${module.database.database_password}"
 }
 
 module "database" {

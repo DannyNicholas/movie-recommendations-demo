@@ -1,9 +1,5 @@
-provider "aws" {
-  region = "eu-west-1"
-}
-
 ####################################
-# Variables common to both instnaces
+# Postgres Variables
 ####################################
 locals {
   engine            = "postgres"
@@ -13,7 +9,6 @@ locals {
   port              = "5432"
   username          = "postgres"
   password          = "ScottLogic"
-  database_url      = "jdbc:postgresql://${module.master.this_db_instance_endpoint}/${var.database-name}"
 }
 
 ## Security group for PostgreSQL
@@ -23,8 +18,8 @@ resource "aws_security_group" "movie_recommendations_postgres_sec_grp" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = local.port
+    to_port     = local.port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
