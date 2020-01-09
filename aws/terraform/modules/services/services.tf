@@ -48,15 +48,15 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
             "value": "postgres"
           },
           {
-            "name": "SPRING_DATASOURCE_URL",
+            "name": "POSTGRES_URL",
             "value": "${var.database_url}"
           },
           {
-            "name": "SPRING_DATASOURCE_USERNAME",
+            "name": "POSTGRES_USERNAME",
             "value": "${var.database_username}"
           },
           {
-            "name": "SPRING_DATASOURCE_PASSWORD",
+            "name": "POSTGRES_PASSWORD",
             "value": "${var.database_password}"
           }
         ],
