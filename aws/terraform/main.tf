@@ -49,6 +49,19 @@ module "services" {
   tasks_desired                 = var.service_tasks_desired
   project-name-value            = var.project-name-value
   service-image-repository-name = var.movie-service-image-repository-name
+  database_url                  = "${module.database.database_url}"
+  database_username             = "${module.database.database_username}"
+  database_password             = "${module.database.database_password}"
+}
+
+module "database" {
+  source                        = "./modules/database"
+  vpc_id                        = module.vpc.id
+  vpc_subnet_ids                = module.vpc.subnet_ids
+  database-identifier           = var.database-identifier
+  database-name                 = var.database-name
+  project-name-value            = var.project-name-value
+  postgres-sec-grp              = var.postgres-sec-grp
 }
 
 ## Security group for ECS instances

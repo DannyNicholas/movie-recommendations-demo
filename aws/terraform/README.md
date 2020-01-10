@@ -17,6 +17,7 @@ The deployment scripts aim to achieve the following.
 - Create a VPN and associated networking.
 - Create an Amazon Elastic Container Service cluster.
 - Deploy multiple instances of our service within the cluster.
+- Create a PostgreSQL database instance for data persistence.
 - Create an application load-balancer as the entry point to our service API. 
 
 
@@ -34,6 +35,8 @@ The default variables are provided within `variables.tf` in this directory or wi
 - `ec2_instance_type` (type of EC2 instances created in cluster e.g. `t2.medium`)
 - `ec2_instances_desired` (desired number of EC2 instances created in cluster - must fall within `autoscale_min` and `autoscale_max`)
 - `service_tasks_desired` (desired number of service tasks to create across cluster i.e. service container instances)
+- `database-identifier` - identity of PostgreSQL instance within AWS.
+- `database-name` - name of database within PostgreSQL instance.
 
 `modules/ecs/variables.tf`
 - `autoscale_min` (minimum number of EC2 instances allowed in cluster)
@@ -74,11 +77,12 @@ If the plan ran successfully, we are now ready to deploy for real using the `app
 
 **NOTE** `apply` __will__ create real AWS resources and you will start being charged by AWS for any resources created.
 
-After a successful deployment, the script will output the DNS name of the created load balancer that is the entry point of our application. For example:
+After a successful deployment, the script will output the DNS name of the created load balancer that is the entry point of our application. The URL for the created PostgreSQL database is also displayed. For example:
 
 ```
 Outputs:
 application_load_balancer_dns_name = movie-api-server-alb-default-123456789.eu-west-1.elb.amazonaws.com
+database_url = jdbc:postgresql://movies-database.abcde12345.eu-west-1.rds.amazonaws.com:5432/movies
 ```
 
 
@@ -129,4 +133,13 @@ This should return a JSON array of movies. For example:
     },
     ....
 ]
+```
+
+### Testing the Database
+
+The created PostgreSQL database is publically accessible, meaning it is possible to run database queries outside of AWS. The database can be accessed via the database URL (or domain) returned by `terraform apply`.
+
+The database username and password credentials are stored within:
+```
+/modules/database/postgres.tf
 ```

@@ -11,9 +11,9 @@ mvn clean install
 
 Run main class `MovieRecommendationApplication.java`.
 
-It is recommended that you run using the h2 file based database - this will be set-up with default data when the service is started.
+It is recommended that you run locally using the h2 file based database - this will be set-up with default data when the service is started.
 
-To run using responses from the h2 database add `--spring.profiles.active=h2`
+To run using responses from the h2 database add `--spring.profiles.active=h2,local`
 
 The h2 database is available at:
 http://host-name/h2
@@ -22,11 +22,11 @@ http://host-name/h2
 
 Run normally `mvn spring-boot:run`
 
-To run using the h2 database add `mvn spring-boot:run -Dspring-boot.run.profiles=h2`
+To run using the h2 database add `mvn spring-boot:run -Dspring-boot.run.profiles=h2,local`
 
 ### Stub responses
 
-To run using stub responses replace 'h2' with 'stub'. This can be useful for testing static responses without a real database.
+To run using stub responses use `--spring.profiles.active=stub`. This can be useful for testing static responses without a real database.
 
 ### Local Postgres Database
 
@@ -50,9 +50,11 @@ Create an empty database called `movies` within pgAdmin.
 
 ![alt text](./assets/create-database.JPG "Create Movies Database")
 
+Ensure `postgres.password` within `application-local.properties` matches the password you used when creating the Postgres instance.
+
 To allow the Movie Recommendations service to connect to the local Postgres database, run with:
 
-```mvn spring-boot:run -Dspring-boot.run.profiles=postgres```
+```mvn spring-boot:run -Dspring-boot.run.profiles=postgres,local```
 
 On start-up, the service will populate the database with default data. All API requests will now result in reads from and writes to our local Postgres database.
 

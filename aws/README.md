@@ -2,7 +2,7 @@
 
 The following sections explain how to deploy the Movie Recommendation service to Amazon Web Service (AWS).
 
-Specifically, deploying to a cluster running multiple containers behind an application load balancer. Each container will run a single instance of the service. The application load balancer routes API requests to different containers in a "round-robin" fashion. 
+Specifically, deploying to a cluster running multiple containers behind an application load balancer. Each container will run a single instance of the service. The application load balancer routes API requests to different containers in a "round-robin" fashion. Data is persisted to a PostgreSQL database.
 
 **IMPORTANT:** It is assumed you have the AWS CLI available and AWS credentials are correctly configured using `aws configure`. For more information of configuring your AWS CLI, read Amazon's guide to the [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
