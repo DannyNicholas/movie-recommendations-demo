@@ -77,11 +77,12 @@ If the plan ran successfully, we are now ready to deploy for real using the `app
 
 **NOTE** `apply` __will__ create real AWS resources and you will start being charged by AWS for any resources created.
 
-After a successful deployment, the script will output the DNS name of the created load balancer that is the entry point of our application. For example:
+After a successful deployment, the script will output the DNS name of the created load balancer that is the entry point of our application. The URL for the created PostgreSQL database is also displayed. For example:
 
 ```
 Outputs:
 application_load_balancer_dns_name = movie-api-server-alb-default-123456789.eu-west-1.elb.amazonaws.com
+database_url = jdbc:postgresql://movies-database.abcde12345.eu-west-1.rds.amazonaws.com:5432/movies
 ```
 
 
@@ -136,7 +137,7 @@ This should return a JSON array of movies. For example:
 
 ### Testing the Database
 
-The created PostgreSQL database is publically accessible, meaning it is possible to run database queries outside of AWS. The database can be accessed via the Database URL (or domain) returned by `terraform apply`.
+The created PostgreSQL database is publically accessible, meaning it is possible to run database queries outside of AWS. The database can be accessed via the database URL (or domain) returned by `terraform apply`.
 
 The database username and password credentials are stored within:
 ```
