@@ -17,6 +17,7 @@ The deployment scripts aim to achieve the following.
 - Create a VPN and associated networking.
 - Create an Amazon Elastic Container Service cluster.
 - Deploy multiple instances of our service within the cluster.
+- Create a PostgreSQL database instance for data persistence.
 - Create an application load-balancer as the entry point to our service API. 
 
 
@@ -34,6 +35,8 @@ The default variables are provided within `variables.tf` in this directory or wi
 - `ec2_instance_type` (type of EC2 instances created in cluster e.g. `t2.medium`)
 - `ec2_instances_desired` (desired number of EC2 instances created in cluster - must fall within `autoscale_min` and `autoscale_max`)
 - `service_tasks_desired` (desired number of service tasks to create across cluster i.e. service container instances)
+- `database-identifier` - identity of PostgreSQL instance within AWS.
+- `database-name` - name of database within PostgreSQL instance.
 
 `modules/ecs/variables.tf`
 - `autoscale_min` (minimum number of EC2 instances allowed in cluster)
@@ -129,4 +132,13 @@ This should return a JSON array of movies. For example:
     },
     ....
 ]
+```
+
+### Testing the Database
+
+The created PostgreSQL database is publically accessible, meaning it is possible to run database queries outside of AWS. The database can be accessed via the Database URL (or domain) returned by `terraform apply`.
+
+The database username and password credentials are stored within:
+```
+/modules/database/postgres.tf
 ```
