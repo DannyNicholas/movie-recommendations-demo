@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/movies-service/recommend"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+      "name": "Star Wars",
+      "genre": "Sci-Fi",
+      "releaseDate": "1977-05-25"
+      },
+      {
+        "name" : "The Godfather",
+        "genre" : "Crime",
+        "releaseDate" : "1972-03-24"
+      }
+    ],
+    "headers": {
+      "Content-Type": "application/json;charset=UTF-8"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/movies-service/search/1972"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "name": "Star Wars",
+      "genre": "Sci-Fi",
+      "releaseDate": "1977-05-25"
+    },
+    "headers": {
+      "Content-Type": "application/json;charset=UTF-8"
+    }
+  }
+}
