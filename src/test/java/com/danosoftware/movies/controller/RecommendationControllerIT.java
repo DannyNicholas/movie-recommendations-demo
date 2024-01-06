@@ -2,12 +2,10 @@ package com.danosoftware.movies.controller;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.service.MovieService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +24,7 @@ import static org.mockito.BDDMockito.given;
  * @MockBean replaces the normal MovieService instance created by Spring with a mock.
  * This gets injected into the controller instead.
  */
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class RecommendationControllerIT {
 

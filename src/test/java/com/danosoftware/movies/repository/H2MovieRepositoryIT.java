@@ -3,15 +3,13 @@ package com.danosoftware.movies.repository;
 import com.danosoftware.movies.config.RecommendationConfig;
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.dto.MovieEntity;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +22,12 @@ import static org.mockito.Mockito.when;
 
 /**
  * Confirms the behaviour of the H2DatabaseMovieRepository
- *
+ * <p>
  * Since we only want to test our movie repository implementation we need to mock the
  * responses returned by the database.
- *
+ * <p>
  * RecommendationConfig class provides the configuration our H2DatabaseMovieRepository needs.
  */
-@RunWith(SpringRunner.class)
 @RestClientTest({H2DatabaseMovieRepository.class, RecommendationConfig.class})
 @TestPropertySource(properties = "movies.service.database.initialise=false")
 @ActiveProfiles("h2")
@@ -42,7 +39,7 @@ public class H2MovieRepositoryIT {
     @MockBean
     private MovieDataRepository dataRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(dataRepository.findAll()).thenReturn(allMovieEntities());
         when(dataRepository.findById(any(Long.class))).thenReturn(Optional.of(movieSolarisEntity()));
