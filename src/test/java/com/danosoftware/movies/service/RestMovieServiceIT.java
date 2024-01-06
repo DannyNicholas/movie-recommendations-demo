@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * Confirms the behaviour of the FilterMovieService
- *
+ * <p>
  * Since we only want to test our movie service implementation we need to mock the repository layer.
  *
  * @MockBean allows us to mock the repository and return our wanted list of test movies.
