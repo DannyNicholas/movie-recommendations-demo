@@ -2,9 +2,8 @@ package com.danosoftware.movies.service;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.repository.MovieRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,7 +24,6 @@ import static org.mockito.Mockito.when;
  *
  * @MockBean allows us to mock the repository and return our wanted list of test movies.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RestMovieServiceIT {
 
@@ -35,7 +33,7 @@ public class RestMovieServiceIT {
     @MockBean
     private MovieRepository repository;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(repository.recommend()).thenReturn(allMovies());
     }

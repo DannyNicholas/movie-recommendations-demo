@@ -2,8 +2,7 @@ package com.danosoftware.movies.repository;
 
 import com.danosoftware.movies.dto.Movie;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
@@ -20,18 +18,18 @@ import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests repository behaviour with a Rest service.
  * Rest service responses provided using Wiremock.
- *
+ * <p>
  * Some tests use configured Wiremock mappings.
  * Wiremock mappings are in /resources/mappings/...
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = { "movies.service.host=http://localhost:${wiremock.server.port}" })
+        properties = {"movies.service.host=http://localhost:${wiremock.server.port}"})
 @AutoConfigureWireMock
 @ActiveProfiles("rest")
 public class WiremockRestMovieRepositoryIT {
@@ -54,12 +52,12 @@ public class WiremockRestMovieRepositoryIT {
                 get(
                         urlEqualTo("/api/movies-service/search/1")
                 )
-                .willReturn(
-                        aResponse()
-                                .withStatus(HttpStatus.OK.value())
-                                .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                                .withBody(json)
-                )
+                        .willReturn(
+                                aResponse()
+                                        .withStatus(HttpStatus.OK.value())
+                                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                        .withBody(json)
+                        )
         );
 
         // assert repository provided the expected response for movie id 1
@@ -68,7 +66,7 @@ public class WiremockRestMovieRepositoryIT {
     }
 
     @Test
-    public void getStarWars()  {
+    public void getStarWars() {
 
         // Request movie 1972 (Wiremock should provide REST response for Star Wars)
         Movie movie = repository.getMovie(1972L).orElseThrow(RuntimeException::new);
@@ -78,16 +76,18 @@ public class WiremockRestMovieRepositoryIT {
         assertThat(movie.getReleaseDate()).isEqualTo(LocalDate.of(1977, 5, 25));
     }
 
-    @Test(expected = HttpClientErrorException.class)
-    public void getUnknownMovie()  {
+    @Test
+    public void getUnknownMovie() {
 
         // Wiremock should return 404 for an unknown movie id
         // Repository should throw an exception
-        repository.getMovie(9999L);
+        assertThrows(
+                HttpClientErrorException.NotFound.class,
+                () -> repository.getMovie(9999L));
     }
 
     @Test
-    public void postTheGodfather()  {
+    public void postTheGodfather() {
 
         // Post The Godfather movie (Wiremock should assign movie id 23)
         Movie movie = new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24));
@@ -97,7 +97,7 @@ public class WiremockRestMovieRepositoryIT {
     }
 
     @Test
-    public void getRecommendations()  {
+    public void getRecommendations() {
 
         // Request recommendations (Wiremock should provide Star Wars and The Godfather)
         List<Movie> movies = repository.recommend();
