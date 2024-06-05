@@ -1,6 +1,7 @@
 package com.danosoftware.movies.repository;
 
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.exception.MovieNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -39,6 +40,9 @@ public class StubMovieRepository implements MovieRepository {
 
     @Override
     public Optional<Movie> getMovie(Long id) {
-        return Optional.of(movies.get(0));
+        if (id > movies.size() - 1) {
+            throw new MovieNotFoundException(id);
+        }
+        return Optional.of(movies.get(id.intValue()));
     }
 }
