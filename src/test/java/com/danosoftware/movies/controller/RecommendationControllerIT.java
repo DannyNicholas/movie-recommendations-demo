@@ -21,7 +21,7 @@ import static org.mockito.BDDMockito.given;
  *
  * Since we are only testing the controller, we want to mock the service layer.
  *
- * @MockBean replaces the normal MovieService instance created by Spring with a mock.
+ * @MockitoBean replaces the normal MovieService instance created by Spring with a mock.
  * This gets injected into the controller instead.
  */
 
