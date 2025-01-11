@@ -5,7 +5,7 @@ import com.danosoftware.movies.service.MovieService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +21,14 @@ import static org.mockito.BDDMockito.given;
  *
  * Since we are only testing the controller, we want to mock the service layer.
  *
- * @MockBean replaces the normal MovieService instance created by Spring with a mock.
+ * @MockitoBean replaces the normal MovieService instance created by Spring with a mock.
  * This gets injected into the controller instead.
  */
 
 @SpringBootTest
 public class RecommendationControllerIT {
 
-    @MockBean
+    @MockitoBean
     private MovieService movieService;
 
     @Autowired
