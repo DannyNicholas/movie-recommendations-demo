@@ -3,6 +3,8 @@ package com.danosoftware.movies.repository;
 import com.danosoftware.movies.config.RecommendationConfig;
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.dto.MovieEntity;
+import com.danosoftware.movies.repository.jpa.H2DatabaseMovieRepository;
+import com.danosoftware.movies.repository.jpa.MovieDataRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,16 +67,16 @@ public class H2MovieRepositoryIT {
     public void shouldSaveMovie() {
 
         // add a new movie
-        Long createdMovieId = repository.addMovie(movieSolaris());
+        String createdMovieId = repository.addMovie(movieSolaris());
 
-        assertThat(createdMovieId, equalTo(1L));
+        assertThat(createdMovieId, equalTo("1"));
     }
 
     @Test
     public void shouldGetMovie() {
 
         // get a new movie
-        Optional<Movie> movie = repository.getMovie(1L);
+        Optional<Movie> movie = repository.getMovie("1");
 
         assertThat(movie.get(), equalTo(movieSolaris()));
     }

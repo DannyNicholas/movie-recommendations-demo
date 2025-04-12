@@ -2,6 +2,7 @@ package com.danosoftware.movies.repository;
 
 import com.danosoftware.movies.config.RecommendationConfig;
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.repository.rest.RestMovieRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

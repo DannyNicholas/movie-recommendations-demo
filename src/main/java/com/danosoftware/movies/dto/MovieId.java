@@ -17,5 +17,5 @@ public class MovieId {
     @NotBlank
     @Schema(description = "Movie id", example = "100")
     @JsonProperty("id")
-    private final Long id;
+    private final String id;
 }

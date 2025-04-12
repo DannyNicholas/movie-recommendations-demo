@@ -87,14 +87,10 @@ public class RecommendationController {
     })
     @GetMapping("/{movieId}")
     public @ResponseBody Movie getMovie(
-            @PathVariable Long movieId) {
+            @PathVariable String movieId) {
 
-        Optional<Movie> movie = service.getMovie(movieId);
-        if (movie.isPresent()) {
-            return movie.get();
-        }
-
-        throw new MovieNotFoundException(movieId);
+        return service.getMovie(movieId)
+                .orElseThrow(() -> new MovieNotFoundException(movieId));
     }
 
     /**

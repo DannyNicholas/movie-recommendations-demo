@@ -1,7 +1,9 @@
-package com.danosoftware.movies.repository;
+package com.danosoftware.movies.repository.jpa;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.dto.MovieEntity;
+import com.danosoftware.movies.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -12,15 +14,16 @@ import java.util.Optional;
 
 /**
  * Database implementation using H2.
- *
+ * <p>
  * H2 Database available at...
  * http://<host>:<port>/<path>
  * when service is running.
- *
+ * <p>
  * eg: http://localhost:8080/h2
  */
 @Repository
 @Profile("h2")
+@Slf4j
 public class H2DatabaseMovieRepository implements MovieRepository {
 
     private final MovieDataRepository repository;
@@ -44,6 +47,7 @@ public class H2DatabaseMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> recommend() {
+        log.info("Making H2 request to retrieve movie recommendations.");
         List<Movie> movies = new ArrayList<>();
         repository.findAll().forEach((movieEntity) -> movies.add(
                 new Movie(
@@ -55,14 +59,16 @@ public class H2DatabaseMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Long addMovie(Movie movie) {
+    public String addMovie(Movie movie) {
+        log.info("Making H2 request to add new movie: {}", movie);
         MovieEntity created = repository.save(new MovieEntity(movie));
-        return created.getId();
+        return String.valueOf(created.getId());
     }
 
     @Override
-    public Optional<Movie> getMovie(Long id) {
-        Optional<MovieEntity> movieEntity = repository.findById(id);
+    public Optional<Movie> getMovie(String id) {
+        log.info("Making H2 request to get movie by id: {}", id);
+        Optional<MovieEntity> movieEntity = repository.findById(Long.parseLong(id));
         if (movieEntity.isPresent()) {
             MovieEntity movie = movieEntity.get();
             return Optional.of(new Movie(

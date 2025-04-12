@@ -16,10 +16,10 @@ public interface MovieRepository {
      * Add a new movie.
      * Return the assigned id.
      */
-    Long addMovie(Movie movie);
+    String addMovie(Movie movie);
 
     /**
      * Get the wanted movie using supplied id.
      */
-    Optional<Movie> getMovie(Long id);
+    Optional<Movie> getMovie(String id);
 }

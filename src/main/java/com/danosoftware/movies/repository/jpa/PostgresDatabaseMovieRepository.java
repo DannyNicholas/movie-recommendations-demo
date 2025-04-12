@@ -1,7 +1,9 @@
-package com.danosoftware.movies.repository;
+package com.danosoftware.movies.repository.jpa;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.dto.MovieEntity;
+import com.danosoftware.movies.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,7 @@ import java.util.Optional;
  */
 @Repository
 @Profile("postgres")
+@Slf4j
 public class PostgresDatabaseMovieRepository implements MovieRepository {
 
     private final MovieDataRepository repository;
@@ -38,6 +41,7 @@ public class PostgresDatabaseMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> recommend() {
+        log.info("Making Postgres request to retrieve movie recommendations.");
         List<Movie> movies = new ArrayList<>();
         repository.findAll().forEach((movieEntity) -> movies.add(
                 new Movie(
@@ -49,14 +53,16 @@ public class PostgresDatabaseMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Long addMovie(Movie movie) {
+    public String addMovie(Movie movie) {
+        log.info("Making Postgres request to add new movie: {}", movie);
         MovieEntity created = repository.save(new MovieEntity(movie));
-        return created.getId();
+        return String.valueOf(created.getId());
     }
 
     @Override
-    public Optional<Movie> getMovie(Long id) {
-        Optional<MovieEntity> movieEntity = repository.findById(id);
+    public Optional<Movie> getMovie(String id) {
+        log.info("Making Postgres request to get movie by id: {}", id);
+        Optional<MovieEntity> movieEntity = repository.findById(Long.parseLong(id));
         if (movieEntity.isPresent()) {
             MovieEntity movie = movieEntity.get();
             return Optional.of(new Movie(

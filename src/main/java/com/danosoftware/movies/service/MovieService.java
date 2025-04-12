@@ -19,13 +19,13 @@ public interface MovieService {
      * Add a new movie.
      * Return the assigned id.
      */
-    Long addMovie(
+    String addMovie(
             Movie movie);
 
     /**
      * Get the wanted movie using supplied id.
      */
     Optional<Movie> getMovie(
-            Long id
+            String id
     );
 }
