@@ -1,6 +1,7 @@
 package com.danosoftware.movies.helpers;
 
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.dto.MovieDocument;
 import com.danosoftware.movies.dto.MovieEntity;
 
 import java.time.LocalDate;
@@ -45,7 +46,15 @@ public class MovieHelper {
         return allMovies().stream().map(m -> new MovieEntity(m)).collect(Collectors.toList());
     }
 
+    public static final List<MovieDocument> allMovieDocuments() {
+        return allMovies().stream().map(m -> new MovieDocument(m)).collect(Collectors.toList());
+    }
+
     public static final MovieEntity movieSolarisEntity() {
         return new MovieEntity(movieSolaris());
+    }
+
+    public static final MovieDocument movieSolarisDocument() {
+        return new MovieDocument(movieSolaris());
     }
 }
