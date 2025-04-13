@@ -21,7 +21,7 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     @ExceptionHandler(MovieNotFoundException.class)
     public ErrorResponse handleNotFound(MovieNotFoundException e) {
-        String error = String.format("Movie id %d not found.", e.getId());
+        String error = String.format("Movie id %s not found.", e.getId());
         logger.error(error);
         return ErrorResponse.builder()
                 .code(HttpStatus.NOT_FOUND.value())

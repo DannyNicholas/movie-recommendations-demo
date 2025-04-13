@@ -1,7 +1,9 @@
-package com.danosoftware.movies.repository;
+package com.danosoftware.movies.repository.stub;
 
 import com.danosoftware.movies.dto.Movie;
 import com.danosoftware.movies.exception.MovieNotFoundException;
+import com.danosoftware.movies.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Provide stub responses to repository requests.
@@ -16,6 +19,7 @@ import java.util.Optional;
  */
 @Repository
 @Profile("stub")
+@Slf4j
 public class StubMovieRepository implements MovieRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(StubMovieRepository.class);
@@ -30,19 +34,22 @@ public class StubMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> recommend() {
+        log.info("Making Stub request to retrieve movie recommendations.");
         return movies;
     }
 
     @Override
-    public Long addMovie(Movie movie) {
-        return 23L;
+    public String addMovie(Movie movie) {
+        log.info("Making Stub request to add new movie: {}", movie);
+        return UUID.randomUUID().toString();
     }
 
     @Override
-    public Optional<Movie> getMovie(Long id) {
-        if (id > movies.size() - 1) {
+    public Optional<Movie> getMovie(String id) {
+        log.info("Making Stub request to get movie by id: {}", id);
+        if (movies.isEmpty()) {
             throw new MovieNotFoundException(id);
         }
-        return Optional.of(movies.get(id.intValue()));
+        return Optional.of(movies.get(0));
     }
 }

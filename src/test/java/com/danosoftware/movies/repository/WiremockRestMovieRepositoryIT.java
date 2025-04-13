@@ -61,7 +61,7 @@ public class WiremockRestMovieRepositoryIT {
         );
 
         // assert repository provided the expected response for movie id 1
-        assertThat(repository.getMovie(1L))
+        assertThat(repository.getMovie("1"))
                 .isEqualTo(Optional.of(movie));
     }
 
@@ -69,7 +69,7 @@ public class WiremockRestMovieRepositoryIT {
     public void getStarWars() {
 
         // Request movie 1972 (Wiremock should provide REST response for Star Wars)
-        Movie movie = repository.getMovie(1972L).orElseThrow(RuntimeException::new);
+        Movie movie = repository.getMovie("1972").orElseThrow(RuntimeException::new);
 
         assertThat(movie.getName()).isEqualTo("Star Wars");
         assertThat(movie.getGenre()).isEqualTo("Sci-Fi");
@@ -83,7 +83,7 @@ public class WiremockRestMovieRepositoryIT {
         // Repository should throw an exception
         assertThrows(
                 HttpClientErrorException.NotFound.class,
-                () -> repository.getMovie(9999L));
+                () -> repository.getMovie("9999"));
     }
 
     @Test
@@ -91,9 +91,9 @@ public class WiremockRestMovieRepositoryIT {
 
         // Post The Godfather movie (Wiremock should assign movie id 23)
         Movie movie = new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24));
-        Long id = repository.addMovie(movie);
+        String id = repository.addMovie(movie);
 
-        assertThat(id).isEqualTo(23);
+        assertThat(id).isEqualTo("23");
     }
 
     @Test

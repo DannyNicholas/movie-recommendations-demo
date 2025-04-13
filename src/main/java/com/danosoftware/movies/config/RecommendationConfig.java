@@ -25,7 +25,7 @@ public class RecommendationConfig {
 
     @Bean
     @Profile("stub")
-    List<Movie> stubMovies () {
+    List<Movie> stubMovies() {
         return Arrays.asList(
                 new Movie("Star Wars", "Sci-Fi", LocalDate.of(1977, 5, 25)),
                 new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24)),
@@ -35,7 +35,7 @@ public class RecommendationConfig {
 
     @Bean
     @Profile("h2")
-    List<Movie> defaultMovies () {
+    List<Movie> defaultMovies() {
         return Arrays.asList(
                 new Movie("Star Wars", "Sci-Fi", LocalDate.of(1977, 5, 25)),
                 new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24)),
@@ -46,7 +46,18 @@ public class RecommendationConfig {
 
     @Bean
     @Profile("postgres")
-    List<Movie> defaultPostgresMovies () {
+    List<Movie> defaultPostgresMovies() {
+        return Arrays.asList(
+                new Movie("Star Wars", "Sci-Fi", LocalDate.of(1977, 5, 25)),
+                new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24)),
+                new Movie("Solaris", "Sci-Fi", LocalDate.of(1972, 9, 26)),
+                new Movie("Blade Runner", "Sci-Fi", LocalDate.of(1982, 6, 25))
+        );
+    }
+
+    @Bean
+    @Profile("mongo")
+    List<Movie> defaultMongoMovies() {
         return Arrays.asList(
                 new Movie("Star Wars", "Sci-Fi", LocalDate.of(1977, 5, 25)),
                 new Movie("The Godfather", "Crime", LocalDate.of(1972, 3, 24)),
@@ -66,6 +77,13 @@ public class RecommendationConfig {
     @Profile("postgres")
     @Qualifier("initialiseDatabase")
     boolean initialiseDatabasePostgres(@Value("${movies.service.database.initialise}") boolean initialiseDatabase) {
+        return initialiseDatabase;
+    }
+
+    @Bean
+    @Profile("mongo")
+    @Qualifier("initialiseDatabase")
+    boolean initialiseDatabaseMongo(@Value("${movies.service.database.initialise}") boolean initialiseDatabase) {
         return initialiseDatabase;
     }
 }

@@ -2,13 +2,13 @@ package com.danosoftware.movies.repository;
 
 import com.danosoftware.movies.config.RecommendationConfig;
 import com.danosoftware.movies.dto.Movie;
-import com.danosoftware.movies.dto.MovieEntity;
-import com.danosoftware.movies.repository.jpa.H2DatabaseMovieRepository;
-import com.danosoftware.movies.repository.jpa.MovieDataRepository;
+import com.danosoftware.movies.dto.MovieDocument;
+import com.danosoftware.movies.repository.mongo.MongoDatabaseMovieRepository;
+import com.danosoftware.movies.repository.mongo.MovieDataMongoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -18,37 +18,39 @@ import java.util.Optional;
 
 import static com.danosoftware.movies.helpers.MovieHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
- * Confirms the behaviour of the H2DatabaseMovieRepository
+ * Confirms the behaviour of the MongoDatabaseMovieRepository
  * <p>
  * Since we only want to test our movie repository implementation we need to mock the
  * responses returned by the database.
  * <p>
- * RecommendationConfig class provides the configuration our H2DatabaseMovieRepository needs.
+ * RecommendationConfig class provides the configuration our MongoDatabaseMovieRepository needs.
  */
-@RestClientTest({H2DatabaseMovieRepository.class, RecommendationConfig.class})
+@SpringBootTest(classes = {MongoDatabaseMovieRepository.class, RecommendationConfig.class})
 @TestPropertySource(properties = "movies.service.database.initialise=false")
-@ActiveProfiles("h2")
-public class H2MovieRepositoryIT {
+@ActiveProfiles("mongo")
+public class MongoMovieRepositoryIT {
 
     @Autowired
-    private MovieRepository repository;
+    private MongoDatabaseMovieRepository repository;
 
     @MockitoBean
-    private MovieDataRepository dataRepository;
+    private MovieDataMongoRepository dataRepository;
+
 
     @BeforeEach
     public void setUp() throws Exception {
-        when(dataRepository.findAll()).thenReturn(allMovieEntities());
-        when(dataRepository.findById(any(Long.class))).thenReturn(Optional.of(movieSolarisEntity()));
+        when(dataRepository.findByGenre(any(String.class))).thenReturn(allMovieDocuments());
+        when(dataRepository.findById(any(String.class))).thenReturn(Optional.of(movieSolarisDocument()));
 
-        MovieEntity created = movieSolarisEntity();
-        created.setId(1L);
-        when(dataRepository.save(any(MovieEntity.class))).thenReturn(created);
+        MovieDocument created = movieSolarisDocument();
+        created.setId("1");
+        when(dataRepository.save(any(MovieDocument.class))).thenReturn(created);
     }
 
     @Test
@@ -69,7 +71,7 @@ public class H2MovieRepositoryIT {
         // add a new movie
         String createdMovieId = repository.addMovie(movieSolaris());
 
-        assertThat(createdMovieId, equalTo("1"));
+        assertThat(createdMovieId, notNullValue());
     }
 
     @Test

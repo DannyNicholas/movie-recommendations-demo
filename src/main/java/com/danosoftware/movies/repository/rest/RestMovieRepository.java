@@ -1,6 +1,8 @@
-package com.danosoftware.movies.repository;
+package com.danosoftware.movies.repository.rest;
 
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @Repository
 @Profile("rest")
+@Slf4j
 public class RestMovieRepository implements MovieRepository {
 
     private final RestTemplate restTemplate;
@@ -44,7 +47,10 @@ public class RestMovieRepository implements MovieRepository {
     @Override
     public List<Movie> recommend() {
 
-        ParameterizedTypeReference<List<Movie>> responseType = new ParameterizedTypeReference<List<Movie>>() {};
+        log.info("Making REST request to retrieve movie recommendations.");
+
+        ParameterizedTypeReference<List<Movie>> responseType = new ParameterizedTypeReference<>() {
+        };
 
         URI uri = UriComponentsBuilder
                 .fromUriString(host)
@@ -65,7 +71,9 @@ public class RestMovieRepository implements MovieRepository {
      * @return id of created movie
      */
     @Override
-    public Long addMovie(Movie movie) {
+    public String addMovie(Movie movie) {
+
+        log.info("Making REST request to add new movie: {}", movie);
 
         URI uri = UriComponentsBuilder
                 .fromUriString(host)
@@ -75,19 +83,22 @@ public class RestMovieRepository implements MovieRepository {
 
         HttpEntity<Movie> entity = new HttpEntity<>(movie);
 
-        ResponseEntity<Long> response = restTemplate
-                .exchange(uri, HttpMethod.POST, entity, Long.class);
+        ResponseEntity<String> response = restTemplate
+                .exchange(uri, HttpMethod.POST, entity, String.class);
 
         return response.getBody();
     }
 
     /**
      * Retrieve a specific movie from the REST service using it's ID
+     *
      * @param id
      * @return movie
      */
     @Override
-    public Optional<Movie> getMovie(Long id) {
+    public Optional<Movie> getMovie(String id) {
+
+        log.info("Making REST request to get movie by id: {}", id);
 
         URI uri = UriComponentsBuilder
                 .fromUriString(host)

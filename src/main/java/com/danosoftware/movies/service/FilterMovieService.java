@@ -28,7 +28,7 @@ public class FilterMovieService implements MovieService {
      * Retrieve movies from repository and then filter by the optional criteria
      *
      * @param genre - optional genre filter
-     * @param year - optional year released filter
+     * @param year  - optional year released filter
      * @return list of filtered movies
      */
     @Override
@@ -44,7 +44,7 @@ public class FilterMovieService implements MovieService {
      * Add a new movie and return ID
      */
     @Override
-    public Long addMovie(Movie movie) {
+    public String addMovie(Movie movie) {
 
         return repository.addMovie(movie);
     }
@@ -53,7 +53,7 @@ public class FilterMovieService implements MovieService {
      * Retrieve a specific movie using ID
      */
     @Override
-    public Optional<Movie> getMovie(Long id) {
+    public Optional<Movie> getMovie(String id) {
 
         return repository.getMovie(id);
     }
