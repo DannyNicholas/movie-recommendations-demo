@@ -1,7 +1,9 @@
 package com.danosoftware.movies.service;
 
 import com.danosoftware.movies.dto.Movie;
+import com.danosoftware.movies.masking.UserService;
 import com.danosoftware.movies.repository.MovieRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,14 @@ import static org.mockito.Mockito.when;
  * @MockBean allows us to mock the repository and return our wanted list of test movies.
  */
 @SpringBootTest
+@Slf4j
 public class RestMovieServiceIT {
 
     @Autowired
     private MovieService movieService;
+
+    @Autowired
+    private UserService userService;
 
     @MockitoBean
     private MovieRepository repository;
@@ -79,5 +85,10 @@ public class RestMovieServiceIT {
         assertThat(movies.get(0), equalTo(movieStarWars()));
         assertThat(movies.get(1), equalTo(movieGodfather()));
         assertThat(movies.get(2), equalTo(movieSolaris()));
+    }
+
+    @Test
+    public void test() {
+        userService.log();
     }
 }
