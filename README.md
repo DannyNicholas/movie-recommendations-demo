@@ -112,14 +112,14 @@ http://localhost:8080/v3/api-docs.yaml
 Build JAR and confirm application works locally
 
 ```
-./mvnw package
+./mvnw clean package
 java -jar target/movie-recommendations-<version>-SNAPSHOT.jar
 ```
 
 To build a Docker image, make sure you are running on a machine where Docker is installed.
 
 ```
-./mvnw install dockerfile:build
+./mvnw clean package docker:build
 ```
 
 Check image:
@@ -135,8 +135,10 @@ Should be listed as `springio/movie-recommendations`.
 Run in container:
 
 ```
-docker run -p 4000:8080 springio/movie-recommendations
+docker run -p 4000:8080 -e SPRING_PROFILES_ACTIVE=stub movie-recommendations:{version}
 ```
+
+> Note: we are passing in the "stub" profile to simplify start-up (no database is needed).
 
 Internally the service runs on port `8080`. The above command maps port `4000` of the docker machine to the spring boot
 service.
@@ -144,13 +146,7 @@ service.
 This allows us to access the application on:
 
 ```
-http://<docker-machine-ip>:4000/api/movies/health
-```
-
-You can obtain the docker machine's IP using:
-
-```
-docker-machine ip
+http://localhost:4000/api/movies/health
 ```
 
 You can now run any number of containers of this service on this machine as long as each is on a different port (
