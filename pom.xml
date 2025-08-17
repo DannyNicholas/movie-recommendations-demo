@@ -108,7 +108,12 @@
                 <executions>
                     <execution>
                         <id>build-image</id>
-                        <phase>package</phase>
+                        <!--
+                        Do not tie image builds to an existing maven build phase such as "package".
+                        We can not guarantee Docker will be available in every environment we build in.
+                        We will explicitly instruct image builds using "mvn clean package docker:build"
+                        -->
+                        <phase>none</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
