@@ -128,7 +128,7 @@ Check image:
 docker image ls
 ```
 
-Should be listed as `springio/movie-recommendations`.
+Should be listed as `movie-recommendations` with the current version as the `tag`.
 
 ### Run in a Docker container
 
