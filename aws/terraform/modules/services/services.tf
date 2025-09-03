@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
         "environment": [
           {
             "name": "SPRING_PROFILES_ACTIVE",
-            "value": "stub,local"
+            "value": "postgres"
           },
           {
             "name": "POSTGRES_URL",
