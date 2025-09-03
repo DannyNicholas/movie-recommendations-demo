@@ -51,22 +51,10 @@ resource "aws_launch_template" "ecs" {
   image_id      = data.aws_ami_ids.ami.ids[0]
   instance_type = var.instance_type
 
-  # This doesn't create network interfaces and can be destroyed but cluster won't start
-  # vpc_security_group_ids = [
-  #   var.ecs_sec_grp_id,
-  #   var.alb_sec_grp_id
-  # ]
-
-  # This starts but results in network interfaces that can't be destroyed
-  network_interfaces {
-    security_groups             = [var.ecs_sec_grp_id, var.alb_sec_grp_id]
-    associate_public_ip_address = true
-  }
-
-  # network_interfaces {
-  #   associate_public_ip_address = true
-  #   subnet_id                   = var.vpc_subnet_ids[0]
-  # }
+  vpc_security_group_ids = [
+    var.ecs_sec_grp_id,
+    var.alb_sec_grp_id
+  ]
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ecs-cluster-instance-profile.name

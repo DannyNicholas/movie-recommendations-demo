@@ -43,9 +43,10 @@ resource "aws_route_table" "movie_recommendations_ecs_vpc_external_route_table" 
 
 ## First subnet within the VPC in a given availability zone
 resource "aws_subnet" "movie_recommendations_ecs_vpc_sub_1" {
-  vpc_id            = aws_vpc.movie_recommendations_vpc.id
-  cidr_block        = var.sub_net_1_cidr_block
-  availability_zone = var.availability_zone_1
+  vpc_id                  = aws_vpc.movie_recommendations_vpc.id
+  cidr_block              = var.sub_net_1_cidr_block
+  availability_zone       = var.availability_zone_1
+  map_public_ip_on_launch = true
 
   tags = {
     Name        = "${var.sub_net_name}-1"
@@ -56,9 +57,10 @@ resource "aws_subnet" "movie_recommendations_ecs_vpc_sub_1" {
 
 ## Second subnet within the VPC in a given availability zone
 resource "aws_subnet" "movie_recommendations_ecs_vpc_sub_2" {
-  vpc_id            = aws_vpc.movie_recommendations_vpc.id
-  cidr_block        = var.sub_net_2_cidr_block
-  availability_zone = var.availability_zone_2
+  vpc_id                  = aws_vpc.movie_recommendations_vpc.id
+  cidr_block              = var.sub_net_2_cidr_block
+  availability_zone       = var.availability_zone_2
+  map_public_ip_on_launch = true
 
   tags = {
     Name        = "${var.sub_net_name}-2"
