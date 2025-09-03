@@ -28,7 +28,7 @@ variable "ecs_sec_grp_id" {
 
 variable "ecs_movie_recommendation_api_log_group_name" {
   type        = string
-  default     = "/ecs/dn-movie-recommendations-api"
+  default     = "/ecs/movie-recommendations-api"
   description = "The name of the api log group to identify cloudwatch logs"
 }
 

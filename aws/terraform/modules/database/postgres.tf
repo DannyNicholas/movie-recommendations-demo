@@ -3,8 +3,8 @@
 ####################################
 locals {
   engine            = "postgres"
-  engine_version    = "11.5"
-  instance_class    = "db.t2.micro"
+  engine_version    = "17.6"
+  instance_class    = "db.t3.micro"
   allocated_storage = 5
   port              = "5432"
   username          = "postgres"

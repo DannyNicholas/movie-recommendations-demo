@@ -4,12 +4,17 @@ resource "aws_ecs_cluster" "movie_recommendation-ecs-cluster" {
 
   tags = {
     Project     = var.project-name-value
-    Environment = terraform.workspace  
+    Environment = terraform.workspace
   }
 }
 
-provider "template" {
-  version = "~> 2.1"
+terraform {
+  required_providers {
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.1"
+    }
+  }
 }
 
 ## template file to initialise EC2 instance on start-up.
@@ -17,7 +22,7 @@ provider "template" {
 # the EC2 instance belongs to.
 data "template_file" "init" {
   template = file("./modules/ecs/cloud-init.yaml")
-  vars  = {
+  vars = {
     ecs_cluster_name = "${var.ecs_cluster_name}"
   }
 }
@@ -40,31 +45,47 @@ resource "aws_iam_instance_profile" "ecs-cluster-instance-profile" {
 }
 
 ## Launch configuration for ECS
-resource "aws_launch_configuration" "ecs" {
-  name = "ECS ${var.ecs_cluster_name}"
+resource "aws_launch_template" "ecs" {
+  name = "ECS_${var.ecs_cluster_name}"
 
-  image_id                    = data.aws_ami_ids.ami.ids[0]
-  instance_type               = var.instance_type
-  security_groups             = [var.ecs_sec_grp_id, var.alb_sec_grp_id]
-  iam_instance_profile        = aws_iam_instance_profile.ecs-cluster-instance-profile.name
-  associate_public_ip_address = true
+  image_id      = data.aws_ami_ids.ami.ids[0]
+  instance_type = var.instance_type
+
+  # This doesn't create network interfaces and can be destroyed but cluster won't start
+  # vpc_security_group_ids = [
+  #   var.ecs_sec_grp_id,
+  #   var.alb_sec_grp_id
+  # ]
+
+  # This starts but results in network interfaces that can't be destroyed
+  network_interfaces {
+    security_groups             = [var.ecs_sec_grp_id, var.alb_sec_grp_id]
+    associate_public_ip_address = true
+  }
+
+  # network_interfaces {
+  #   associate_public_ip_address = true
+  #   subnet_id                   = var.vpc_subnet_ids[0]
+  # }
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ecs-cluster-instance-profile.name
+  }
 
   # Uncomment the line below if you need to directly SSH to EC2 instances
   #key_name                    = var.ssh_key_name
 
   # associates the ec2 instance with the cluster
-  user_data                   = data.template_file.init.rendered
+  user_data = base64encode(data.template_file.init.rendered)
 }
 
-resource "aws_autoscaling_group" "ecs-cluster" {
-  
-  name = "ECS ${var.ecs_cluster_name}"
+resource "aws_autoscaling_group" "ecs" {
+  name = "ECS_${var.ecs_cluster_name}"
 
-  min_size             = var.autoscale_min
-  max_size             = var.autoscale_max
-  desired_capacity     = var.instances_desired
-  health_check_type    = "EC2"
-  launch_configuration = aws_launch_configuration.ecs.name
+  min_size          = var.autoscale_min
+  max_size          = var.autoscale_max
+  desired_capacity  = var.instances_desired
+  health_check_type = "EC2"
 
   vpc_zone_identifier = var.vpc_subnet_ids
 
@@ -85,4 +106,9 @@ resource "aws_autoscaling_group" "ecs-cluster" {
       propagate_at_launch = true
     },
   ]
+
+  launch_template {
+    id      = aws_launch_template.ecs.id
+    version = "$Latest"
+  }
 }
