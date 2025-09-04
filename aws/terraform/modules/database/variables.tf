@@ -18,7 +18,7 @@ variable "vpc_subnet_ids" {
 }
 
 variable "vpc_id" {
-    type = string
+  type = string
 }
 
 variable "postgres-sec-grp" {
