@@ -8,7 +8,7 @@ locals {
   allocated_storage = 5
   port              = "5432"
   username          = "postgres"
-  password          = "secret"
+  password          = "secretPassword1234"
 }
 
 ## Security group for PostgreSQL
