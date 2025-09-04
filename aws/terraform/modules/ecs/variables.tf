@@ -3,10 +3,6 @@ variable "ecs_cluster_name" {
   default = "movie-recommendations-cluster"
 }
 
-variable "vpc_id" {
-  type = string
-}
-
 variable "ecs_cluster_host_role_name" {
   type    = string
   default = "movie-recommendations-ecs-cluster-host-role"
@@ -30,17 +26,6 @@ variable "autoscale_min" {
 variable "instance_type" {
   type = string
 }
-
-variable "amis" {
-  description = "Which AMI to spawn. Defaults to the AWS ECS optimized images."
-
-  # TODO: support other regions.
-  default = {
-    eu-west-2 = "ami-2d386654"
-  }
-}
-
-variable "region" {}
 
 variable "autoscale_max" {
   type    = number

@@ -10,19 +10,7 @@ variable "ecs_service_policy_id" {
   type = string
 }
 
-variable "ecs_service_role_arn" {
-  type = string
-}
-
 variable "vpc_id" {
-  type = string
-}
-
-variable "vpc_subnet_ids" {
-  type = list(string)
-}
-
-variable "ecs_sec_grp_id" {
   type = string
 }
 
@@ -44,7 +32,7 @@ variable "tasks_desired" {
   default     = 1
 }
 
-variable loadbalancer_id {
+variable "loadbalancer_id" {
   type = string
 }
 

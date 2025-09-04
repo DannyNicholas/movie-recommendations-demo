@@ -23,7 +23,7 @@ terraform {
 data "template_file" "init" {
   template = file("./modules/ecs/cloud-init.yaml")
   vars = {
-    ecs_cluster_name = "${var.ecs_cluster_name}"
+    ecs_cluster_name = var.ecs_cluster_name
   }
 }
 

@@ -12,8 +12,8 @@ data "aws_ecr_repository" "movie_recommendation_api_repo" {
 resource "aws_cloudwatch_log_group" "movie-recommendations-log-group" {
   name = local.api_log_group_name
   tags = {
-    Project     = "${var.project-name-value}"
-    Environment = "${terraform.workspace}"
+    Project     = var.project-name-value
+    Environment = terraform.workspace
   }
 }
 
@@ -92,7 +92,7 @@ resource "null_resource" "movie_recommendations_ecs_service_dependencies" {
 
 resource "null_resource" "alb_exists" {
   triggers = {
-    alb_name = "${var.alb_arn}"
+    alb_name = var.alb_arn
   }
 }
 

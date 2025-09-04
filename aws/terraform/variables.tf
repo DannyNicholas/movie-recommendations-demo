@@ -24,11 +24,6 @@ variable "sub_net_name" {
   default = "movie-recommendations-shared-subnet"
 }
 
-variable "api_gateway_name" {
-  type    = string
-  default = "movie-recommendations-shared-api-gateway"
-}
-
 variable "ecs-sec-grp" {
   type    = string
   default = "movie-recommendations-ecs-sec-grp"
