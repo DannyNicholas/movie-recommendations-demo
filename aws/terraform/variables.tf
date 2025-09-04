@@ -1,3 +1,9 @@
+variable "api_domain" {
+  type        = string
+  description = "Wanted Route53 API domain. Must be one you own."
+  default     = "danosoftware.com"
+}
+
 variable "region" {
   type        = string
   description = "The AWS region to create resources in."

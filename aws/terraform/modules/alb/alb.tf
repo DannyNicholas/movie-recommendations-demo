@@ -52,7 +52,7 @@ resource "aws_lb_target_group" "movie_recommendations-ecs-tg" {
 }
 
 data "aws_route53_zone" "main" {
-  name         = "danosoftware.com"
+  name         = var.api_domain
   private_zone = false
 }
 
@@ -70,7 +70,7 @@ resource "aws_route53_record" "api" {
 
 # Required for HTTPS
 resource "aws_acm_certificate" "api_cert" {
-  domain_name       = "api.danosoftware.com"
+  domain_name       = "api.${data.aws_route53_zone.main.name}"
   validation_method = "DNS"
 }
 

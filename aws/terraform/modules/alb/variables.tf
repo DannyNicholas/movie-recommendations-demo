@@ -10,12 +10,6 @@ variable "vpc_subnet_ids" {
   type = list(string)
 }
 
-variable "consistent_url" {
-  type        = string
-  description = "the private hosted zone URL to map to load balancer"
-  default     = ""
-}
-
 variable "alb_target_group_name" {
   type = string
 }
@@ -32,4 +26,9 @@ variable "internal" {
 variable "project-name-value" {
   type        = string
   description = "Project tag value, used for tracking costs"
+}
+
+variable "api_domain" {
+  type        = string
+  description = "Wanted Route53 API domain. Must be one you own."
 }
