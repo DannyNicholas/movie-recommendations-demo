@@ -14,3 +14,8 @@ output "dns_name" {
 output "arn" {
   value = aws_alb.movie-ecs-alb.arn
 }
+
+output "api_domain_name" {
+  description = "Fully qualified domain name for the API"
+  value       = aws_route53_record.api.fqdn
+}

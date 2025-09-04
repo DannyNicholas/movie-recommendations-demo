@@ -10,7 +10,7 @@ resource "aws_alb" "movie-ecs-alb" {
   tags = {
     Name        = var.alb_name
     Project     = var.project-name-value
-    Environment = terraform.workspace  
+    Environment = terraform.workspace
   }
 }
 
@@ -49,14 +49,19 @@ resource "aws_lb_target_group" "movie_recommendations-ecs-tg" {
   }
 }
 
-## Create the entry in the private hosted zone if passed in
-# resource "aws_route53_record" "alb_private_hosted_zone_entry" {
-#   count = var.consistent_url != "" ? 1 : 0
+data "aws_route53_zone" "main" {
+  name         = "danosoftware.com"
+  private_zone = false
+}
 
-#   zone_id = var.private_hosted_zone_id
-#   name    = var.consistent_url
+resource "aws_route53_record" "api" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = "api.${data.aws_route53_zone.main.name}"
+  type    = "A"
 
-#   type    = "CNAME"
-#   ttl     = "300"
-#   records = [aws_alb.movie-ecs-alb.dns_name]
-# }
+  alias {
+    name                   = aws_alb.movie-ecs-alb.dns_name
+    zone_id                = aws_alb.movie-ecs-alb.zone_id
+    evaluate_target_health = true
+  }
+}
