@@ -30,13 +30,13 @@ variable "sub_net_2_cidr_block" {
 variable "availability_zone_1" {
   type        = string
   description = "The first availability zone"
-  default     = "eu-west-1a"
+  default     = "eu-west-2a"
 }
 
 variable "availability_zone_2" {
   type        = string
   description = "The second availability zone"
-  default     = "eu-west-1c"
+  default     = "eu-west-2c"
 }
 
 variable "project-name-value" {

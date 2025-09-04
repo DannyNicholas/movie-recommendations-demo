@@ -1,6 +1,6 @@
 locals {
   api_log_group_name = "${var.ecs_movie_recommendation_api_log_group_name}-${terraform.workspace}"
-  api_container_name = "dn-movie-recommendations"
+  api_container_name = "movie-recommendations"
 }
 
 ## ECR Repository containing service's docker image
@@ -9,21 +9,21 @@ data "aws_ecr_repository" "movie_recommendation_api_repo" {
 }
 
 ## Cloud Watch log group for service
-resource "aws_cloudwatch_log_group" "dn-movie-recommendations-log-group" {
+resource "aws_cloudwatch_log_group" "movie-recommendations-log-group" {
   name = local.api_log_group_name
   tags = {
-    Project     = "${var.project-name-value}"
-    Environment = "${terraform.workspace}"  
+    Project     = var.project-name-value
+    Environment = terraform.workspace
   }
 }
 
 ## ECS Task definition for service
 resource "aws_ecs_task_definition" "movie_recommendation_api" {
-  family       = "dn-movie-recommendations-service"
+  family       = "movie-recommendations-service"
   network_mode = "bridge"
   tags = {
     Project     = var.project-name-value
-    Environment = terraform.workspace  
+    Environment = terraform.workspace
   }
 
   container_definitions = <<DEFINITION
@@ -63,7 +63,7 @@ resource "aws_ecs_task_definition" "movie_recommendation_api" {
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
-                "awslogs-group": "${aws_cloudwatch_log_group.dn-movie-recommendations-log-group.name}",
+                "awslogs-group": "${aws_cloudwatch_log_group.movie-recommendations-log-group.name}",
                 "awslogs-region": "${var.region}",
                 "awslogs-stream-prefix": "ecs"
             }
@@ -75,8 +75,13 @@ DEFINITION
 
 ## Create a null resource with the dependencies from other modules so that 
 ## the services can explicitly depend on them
-provider "null" {
-  version = "~> 2.1"
+terraform {
+  required_providers {
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 2.1"
+    }
+  }
 }
 
 resource "null_resource" "movie_recommendations_ecs_service_dependencies" {
@@ -87,7 +92,7 @@ resource "null_resource" "movie_recommendations_ecs_service_dependencies" {
 
 resource "null_resource" "alb_exists" {
   triggers = {
-    alb_name = "${var.alb_arn}"
+    alb_name = var.alb_arn
   }
 }
 
@@ -142,6 +147,6 @@ resource "aws_ecs_service" "movie_recommendations-ecs-service-api" {
   ]
   tags = {
     Project     = var.project-name-value
-    Environment = terraform.workspace 
+    Environment = terraform.workspace
   }
 }

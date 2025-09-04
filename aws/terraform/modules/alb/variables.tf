@@ -1,4 +1,4 @@
-variable alb_sec_grp_id {
+variable "alb_sec_grp_id" {
   type = string
 }
 
@@ -17,10 +17,6 @@ variable "consistent_url" {
 }
 
 variable "alb_target_group_name" {
-  type = string
-}
-
-variable "alb_sec_grp_name" {
   type = string
 }
 

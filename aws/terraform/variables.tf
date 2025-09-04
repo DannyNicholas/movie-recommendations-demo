@@ -1,7 +1,7 @@
 variable "region" {
   type        = string
   description = "The AWS region to create resources in."
-  default     = "eu-west-1"
+  default     = "eu-west-2"
 }
 
 variable "vpc_name" {
@@ -22,11 +22,6 @@ variable "route_table_name" {
 variable "sub_net_name" {
   type    = string
   default = "movie-recommendations-shared-subnet"
-}
-
-variable "api_gateway_name" {
-  type    = string
-  default = "movie-recommendations-shared-api-gateway"
 }
 
 variable "ecs-sec-grp" {
@@ -57,13 +52,13 @@ variable "alb_target_group_name" {
 variable "project-name-value" {
   type        = string
   description = "Project tag value, used for tracking costs"
-  default     = "dn-movie-recommendations"
+  default     = "movie-recommendations"
 }
 
 variable "movie-service-image-repository-name" {
   type        = string
   description = "Name of the ECR repository where the service's container image is stored"
-  default     = "dn_movie_recommendation_api"
+  default     = "movie-recommendations-api"
 }
 
 variable "ec2_instance_type" {
@@ -87,7 +82,7 @@ variable "service_tasks_desired" {
 variable "database-identifier" {
   type        = string
   description = "Database identifier"
-  default     = "dn-movies-database"
+  default     = "movies-database"
 }
 
 variable "database-name" {

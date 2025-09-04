@@ -10,25 +10,13 @@ variable "ecs_service_policy_id" {
   type = string
 }
 
-variable "ecs_service_role_arn" {
-  type = string
-}
-
 variable "vpc_id" {
-  type = string
-}
-
-variable "vpc_subnet_ids" {
-  type = list(string)
-}
-
-variable "ecs_sec_grp_id" {
   type = string
 }
 
 variable "ecs_movie_recommendation_api_log_group_name" {
   type        = string
-  default     = "/ecs/dn-movie-recommendations-api"
+  default     = "/ecs/movie-recommendations-api"
   description = "The name of the api log group to identify cloudwatch logs"
 }
 
@@ -44,7 +32,7 @@ variable "tasks_desired" {
   default     = 1
 }
 
-variable loadbalancer_id {
+variable "loadbalancer_id" {
   type = string
 }
 
