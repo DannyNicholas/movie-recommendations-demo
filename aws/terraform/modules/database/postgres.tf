@@ -8,7 +8,7 @@ locals {
   allocated_storage = 5
   port              = "5432"
   username          = "postgres"
-  password          = "ScottLogic"
+  password          = "secretPassword1234"
 }
 
 ## Security group for PostgreSQL
@@ -62,7 +62,7 @@ module "master" {
   vpc_security_group_ids = [aws_security_group.movie_recommendations_postgres_sec_grp.id]
 
   maintenance_window = "Mon:00:00-Mon:03:00"
-  
+
   # DB subnet group
   subnet_ids = var.vpc_subnet_ids
 
@@ -71,6 +71,6 @@ module "master" {
 
   tags = {
     Project     = var.project-name-value
-    Environment = terraform.workspace  
+    Environment = terraform.workspace
   }
 }

@@ -28,6 +28,7 @@ module "alb" {
   alb_target_group_name = "${var.alb_target_group_name}-${terraform.workspace}"
   alb_sec_grp_id        = aws_security_group.movie_recommendations_ecs_load_bal_sec_grp.id
   project-name-value    = var.project-name-value
+  api_domain            = var.api_domain
 }
 
 module "ecs" {
