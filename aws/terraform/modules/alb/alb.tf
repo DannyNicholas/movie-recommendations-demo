@@ -16,8 +16,10 @@ resource "aws_alb" "movie-ecs-alb" {
 
 resource "aws_lb_listener" "movie_recommendations-producer-lb-listener" {
   load_balancer_arn = aws_alb.movie-ecs-alb.id
-  port              = 80
-  protocol          = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate_validation.api_cert_validation.certificate_arn
 
   depends_on = [aws_alb.movie-ecs-alb, aws_lb_target_group.movie_recommendations-ecs-tg]
 
@@ -64,4 +66,23 @@ resource "aws_route53_record" "api" {
     zone_id                = aws_alb.movie-ecs-alb.zone_id
     evaluate_target_health = true
   }
+}
+
+# Required for HTTPS
+resource "aws_acm_certificate" "api_cert" {
+  domain_name       = "api.danosoftware.com"
+  validation_method = "DNS"
+}
+
+resource "aws_route53_record" "cert_validation" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = aws_acm_certificate.api_cert.domain_validation_options[0].resource_record_name
+  type    = aws_acm_certificate.api_cert.domain_validation_options[0].resource_record_type
+  records = [aws_acm_certificate.api_cert.domain_validation_options[0].resource_record_value]
+  ttl     = 60
+}
+
+resource "aws_acm_certificate_validation" "api_cert_validation" {
+  certificate_arn         = aws_acm_certificate.api_cert.arn
+  validation_record_fqdns = [aws_route53_record.cert_validation.fqdn]
 }
