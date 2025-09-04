@@ -23,7 +23,7 @@ variable "ecs_movie_recommendation_api_log_group_name" {
 variable "service_discovery_domain_name" {
   type        = string
   description = "The name of the domain used by service discovery"
-  default     = "movie-recommendations-api.scottlogic.com"
+  default     = "movie-recommendations-api.danosoftware.com"
 }
 
 variable "tasks_desired" {
