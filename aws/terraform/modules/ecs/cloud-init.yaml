@@ -3,8 +3,8 @@
 write_files:
   - path: /root/configure.sh
     content: |
-        #!/bin/bash
-        echo ECS_CLUSTER='${ecs_cluster_name}' > /etc/ecs/ecs.config
+      #!/bin/bash
+      echo ECS_CLUSTER='${ecs_cluster_name}' > /etc/ecs/ecs.config
 
 runcmd:
   - bash /root/configure.sh

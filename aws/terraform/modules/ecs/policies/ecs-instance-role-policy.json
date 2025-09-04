@@ -20,7 +20,12 @@
     },
     {
       "Effect": "Allow",
-      "Action": ["kinesis:*", "dynamodb:*", "cloudwatch:PutMetricData", "s3:*"],
+      "Action": [
+        "kinesis:*",
+        "dynamodb:*",
+        "cloudwatch:PutMetricData",
+        "s3:*"
+      ],
       "Resource": "*"
     }
   ]
